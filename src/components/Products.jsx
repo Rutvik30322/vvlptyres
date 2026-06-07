@@ -2,6 +2,11 @@ import React, { useRef } from 'react';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { ChevronRight, Zap } from 'lucide-react';
 
+// Import real tyre images for featured section
+import michelinSportImg from '../assets/Tyres Size/MICHELIN CAR TYRES/MICHELIN R18.png';
+import yokohamaCarImg from '../assets/Tyres Size/YOKOHAMA CAR TYRES/YOKOHAMA R14.png';
+import michelinBikeImg from '../assets/Tyres Size/MICHELIN BIKE TYRES/MICHELIN BIKE 1.png';
+
 // 3D Tilt Card Subcomponent
 function ProductCard({ title, badge, desc, specs, accentColor, image, targetHash }) {
   const cardRef = useRef(null);
@@ -133,7 +138,7 @@ export default function Products() {
       badge: "Ultra Performance Car",
       desc: "Premium sports tyre designed for high steering responsiveness, dry grip, and high wet-braking safety.",
       accentColor: "#3b82f6",
-      image: "/images/tyre_michelin_sport.png",
+      image: michelinSportImg,
       specs: [
         { label: "Rim Range", value: "17\" - 20\"" },
         { label: "Starting Price", value: "₹9,500" },
@@ -146,7 +151,7 @@ export default function Products() {
       badge: "All-Terrain SUV",
       desc: "Severe snow certified all-terrain radial with orange-oil compounds for high offroad durability.",
       accentColor: "#22c55e",
-      image: "/images/tyre_yokohama_car.png",
+      image: yokohamaCarImg,
       specs: [
         { label: "Rim Range", value: "15\" - 18\"" },
         { label: "Starting Price", value: "₹6,800" },
@@ -159,7 +164,7 @@ export default function Products() {
       badge: "Sport Touring Bike",
       desc: "The reference sport touring motorcycle tyre. Uncompromising wet grip and longevity with dual-compound technology.",
       accentColor: "#ef4444",
-      image: "/images/tyre_michelin_bike.png",
+      image: michelinBikeImg,
       specs: [
         { label: "Rim Range", value: "17\" Radial" },
         { label: "Starting Price", value: "₹6,800" },

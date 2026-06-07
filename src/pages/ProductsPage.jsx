@@ -3,6 +3,70 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Shield, Zap, Search, Calculator, Check, ShoppingBag, Info, PhoneCall, Download, Printer, ChevronLeft, ChevronRight, X, Eye, ListFilter } from 'lucide-react';
 import BrandLogo from '../components/BrandLogo';
 
+// Import all tyre images from src/assets/Tyres Size/
+// Apollo
+import apolloBike1 from '../assets/Tyres Size/APOLLO BIKE TYRES/APOLLO 1.png';
+import apolloBike2 from '../assets/Tyres Size/APOLLO BIKE TYRES/APOLLO 2.png';
+import apolloBike3 from '../assets/Tyres Size/APOLLO BIKE TYRES/APOLLO 3.png';
+import apolloCar1 from '../assets/Tyres Size/APOLLO CAR TYRES/APOLLO CAR R13 .png';
+import apolloCar2 from '../assets/Tyres Size/APOLLO CAR TYRES/APOLLO CAR R17.png';
+import apolloCar3 from '../assets/Tyres Size/APOLLO CAR TYRES/APOLLO CAR R20.png';
+
+// BKT
+import bktBike1 from '../assets/Tyres Size/BKT BIKE TYRES/BKT 1.png';
+import bktBike2 from '../assets/Tyres Size/BKT BIKE TYRES/BKT 2.png';
+import bktBike3 from '../assets/Tyres Size/BKT BIKE TYRES/BKT 3.png';
+
+// CEAT
+import ceatBike1 from '../assets/Tyres Size/CEAT BIKE TYRES/CEAT BIKE 1.png';
+import ceatBike2 from '../assets/Tyres Size/CEAT BIKE TYRES/CEAT BIKE 2.png';
+import ceatBike3 from '../assets/Tyres Size/CEAT BIKE TYRES/CEAT BIKE 3.png';
+import ceatCar1 from '../assets/Tyres Size/CEAT CAR TYRES/CEAT R14.png';
+import ceatCar2 from '../assets/Tyres Size/CEAT CAR TYRES/CEAT R16.png';
+import ceatCar3 from '../assets/Tyres Size/CEAT CAR TYRES/CEAT R18.png';
+
+// Continental
+import continentalBike1 from '../assets/Tyres Size/CONTINENTAL BIKE TYRES/CONTINENTAL BIKE 1.png';
+import continentalBike2 from '../assets/Tyres Size/CONTINENTAL BIKE TYRES/CONTINENTAL BIKE 2.png';
+import continentalBike3 from '../assets/Tyres Size/CONTINENTAL BIKE TYRES/CONTINENTAL BIKE 3.png';
+import continentalCar1 from '../assets/Tyres Size/CONTINENTAL CAR TYRES/CONTINENTAL CAR R12.png';
+import continentalCar2 from '../assets/Tyres Size/CONTINENTAL CAR TYRES/CONTINENTAL CAR R14.png';
+import continentalCar3 from '../assets/Tyres Size/CONTINENTAL CAR TYRES/CONTINENTAL CAR R17.png';
+
+// JK
+import jkBike1 from '../assets/Tyres Size/JK BIKE TYRES/JK BIKE 1.png';
+import jkBike2 from '../assets/Tyres Size/JK BIKE TYRES/JK BIKE 2.png';
+import jkBike3 from '../assets/Tyres Size/JK BIKE TYRES/JK BIKE 3.png';
+import jkCar1 from '../assets/Tyres Size/JK CAR TYRES/JK R14.png';
+import jkCar2 from '../assets/Tyres Size/JK CAR TYRES/JK R16.png';
+import jkCar3 from '../assets/Tyres Size/JK CAR TYRES/JK R18.png';
+
+// Michelin
+import michelinBike1 from '../assets/Tyres Size/MICHELIN BIKE TYRES/MICHELIN BIKE 1.png';
+import michelinBike2 from '../assets/Tyres Size/MICHELIN BIKE TYRES/MICHELIN BIKE 2.png';
+import michelinBike3 from '../assets/Tyres Size/MICHELIN BIKE TYRES/MICHELIN BIKE 3.png';
+import michelinCar1 from '../assets/Tyres Size/MICHELIN CAR TYRES/MICHELIN R18.png';
+import michelinCar2 from '../assets/Tyres Size/MICHELIN CAR TYRES/MICHELIN R20.png';
+
+// MRF
+import mrfBike1 from '../assets/Tyres Size/MRF BIKE TYRES/MRF BIKE R17.png';
+import mrfBike2 from '../assets/Tyres Size/MRF BIKE TYRES/MRF BIKE R18.png';
+import mrfBike3 from '../assets/Tyres Size/MRF BIKE TYRES/MRF BIKE R19.png';
+import mrfCar1 from '../assets/Tyres Size/MRF CAR TYRES/MRF R12.png';
+import mrfCar2 from '../assets/Tyres Size/MRF CAR TYRES/MRF R14.png';
+import mrfCar3 from '../assets/Tyres Size/MRF CAR TYRES/MRF R16.png';
+import mrfCar4 from '../assets/Tyres Size/MRF CAR TYRES/MRF R20.png';
+
+// TVS
+import tvsBike1 from '../assets/Tyres Size/TVS BIKE TYRES/TVS BIKE 1.png';
+import tvsBike2 from '../assets/Tyres Size/TVS BIKE TYRES/TVS BIKE 2.png';
+import tvsBike3 from '../assets/Tyres Size/TVS BIKE TYRES/CEAT BIKE 3.png';
+
+// Yokohama
+import yokohamaCar1 from '../assets/Tyres Size/YOKOHAMA CAR TYRES/YOKOHAMA R14.png';
+import yokohamaCar2 from '../assets/Tyres Size/YOKOHAMA CAR TYRES/YOKOHAMA R16.png';
+import yokohamaCar3 from '../assets/Tyres Size/YOKOHAMA CAR TYRES/YOKOHAMA R20.png';
+
 export default function ProductsPage() {
   // Tab selector state ('tyres' or 'alloys')
   const [activeCatalog, setActiveCatalog] = useState('tyres');
@@ -69,9 +133,8 @@ export default function ProductsPage() {
             { label: "Treadwear (UTQG)", value: "340 AA A" }
           ],
           images: [
-            "/images/tyre_michelin_sport.png",
-            "/images/tyre_installation.png",
-            "/images/customer_vehicles.png"
+            michelinCar1,
+            michelinCar2
           ],
           sizes: [
             { size: "17 Inch", base: 9500, bulk: 9100 },
@@ -93,9 +156,9 @@ export default function ProductsPage() {
             { label: "Wet Traction", value: "Water Evergrip Sipes" }
           ],
           images: [
-            "/images/tyre_michelin_bike.png",
-            "/images/tyre_installation.png",
-            "/images/customer_vehicles.png"
+            michelinBike1,
+            michelinBike2,
+            michelinBike3
           ],
           sizes: [
             { size: "17 Inch Front", base: 6800, bulk: 6500 },
@@ -176,9 +239,10 @@ export default function ProductsPage() {
             { label: "Side Strength", value: "Reinforced Bead" }
           ],
           images: [
-            "/images/tyre_mrf_perfinza.png",
-            "/images/tyre_installation.png",
-            "/images/customer_vehicles.png"
+            mrfCar1,
+            mrfCar2,
+            mrfCar3,
+            mrfCar4
           ],
           sizes: [
             { size: "15 Inch", base: 6300, bulk: 6000 },
@@ -200,9 +264,9 @@ export default function ProductsPage() {
             { label: "Bead type", value: "High-Tensile Wire Bead" }
           ],
           images: [
-            "/images/tyre_mrf_bike.png",
-            "/images/tyre_installation.png",
-            "/images/customer_vehicles.png"
+            mrfBike1,
+            mrfBike2,
+            mrfBike3
           ],
           sizes: [
             { size: "17 Inch Front", base: 2200, bulk: 2050 },
@@ -230,9 +294,9 @@ export default function ProductsPage() {
             { label: "Warranty", value: "5-Year Manufacturer" }
           ],
           images: [
-            "/images/tyre_apollo_altrust.png",
-            "/images/tyre_installation.png",
-            "/images/customer_vehicles.png"
+            apolloCar1,
+            apolloCar2,
+            apolloCar3
           ],
           sizes: [
             { size: "15 Inch", base: 6200, bulk: 6000 },
@@ -253,9 +317,9 @@ export default function ProductsPage() {
             { label: "Profile", value: "Dual Compound Sporty" }
           ],
           images: [
-            "/images/tyre_apollo_bike.png",
-            "/images/tyre_installation.png",
-            "/images/customer_vehicles.png"
+            apolloBike1,
+            apolloBike2,
+            apolloBike3
           ],
           sizes: [
             { size: "17 Inch Front", base: 4200, bulk: 3950 },
@@ -313,9 +377,9 @@ export default function ProductsPage() {
             { label: "Noise Rating", value: "Acoustic Noise-Barriers" }
           ],
           images: [
-            "/images/tyre_continental_car.png",
-            "/images/wheel_alignment.png",
-            "/images/customer_vehicles.png"
+            continentalCar1,
+            continentalCar2,
+            continentalCar3
           ],
           sizes: [
             { size: "16 Inch", base: 7400, bulk: 7100 },
@@ -337,9 +401,9 @@ export default function ProductsPage() {
             { label: "Manufacture", value: "Handmade in Germany" }
           ],
           images: [
-            "/images/tyre_continental_bike.png",
-            "/images/wheel_alignment.png",
-            "/images/customer_vehicles.png"
+            continentalBike1,
+            continentalBike2,
+            continentalBike3
           ],
           sizes: [
             { size: "17 Inch Front", base: 8200, bulk: 7800 },
@@ -366,9 +430,9 @@ export default function ProductsPage() {
             { label: "Sidewall Armor", value: "Aggressive Block Guard" }
           ],
           images: [
-            "/images/tyre_yokohama_car.png",
-            "/images/tyre_installation.png",
-            "/images/customer_vehicles.png"
+            yokohamaCar1,
+            yokohamaCar2,
+            yokohamaCar3
           ],
           sizes: [
             { size: "15 Inch", base: 6800, bulk: 6450 },
@@ -397,9 +461,9 @@ export default function ProductsPage() {
             { label: "Warranty", value: "3-Year Unconditional" }
           ],
           images: [
-            "/images/tyre_jk_car.png",
-            "/images/tyre_installation.png",
-            "/images/customer_vehicles.png"
+            jkCar1,
+            jkCar2,
+            jkCar3
           ],
           sizes: [
             { size: "13 Inch", base: 3400, bulk: 3200 },
@@ -421,9 +485,9 @@ export default function ProductsPage() {
             { label: "Safety", value: "Enhanced Cornering Grooves" }
           ],
           images: [
-            "/images/tyre_jk_bike.png",
-            "/images/tyre_installation.png",
-            "/images/customer_vehicles.png"
+            jkBike1,
+            jkBike2,
+            jkBike3
           ],
           sizes: [
             { size: "17 Inch Front", base: 1800, bulk: 1700 },
@@ -450,9 +514,9 @@ export default function ProductsPage() {
             { label: "Warranty", value: "5-Year Manufacturer" }
           ],
           images: [
-            "/images/tyre_ceat_car.png",
-            "/images/wheel_alignment.png",
-            "/images/customer_vehicles.png"
+            ceatCar1,
+            ceatCar2,
+            ceatCar3
           ],
           sizes: [
             { size: "14 Inch", base: 4300, bulk: 4050 },
@@ -474,9 +538,9 @@ export default function ProductsPage() {
             { label: "Durability", value: "Radial Steel-Belted Plies" }
           ],
           images: [
-            "/images/tyre_ceat_bike.png",
-            "/images/wheel_alignment.png",
-            "/images/customer_vehicles.png"
+            ceatBike1,
+            ceatBike2,
+            ceatBike3
           ],
           sizes: [
             { size: "17 Inch Front", base: 2600, bulk: 2450 },
@@ -503,9 +567,9 @@ export default function ProductsPage() {
             { label: "Lean Rating", value: "Track Grip Compound" }
           ],
           images: [
-            "/images/tyre_tvs_bike.png",
-            "/images/tyre_installation.png",
-            "/images/customer_vehicles.png"
+            tvsBike1,
+            tvsBike2,
+            tvsBike3
           ],
           sizes: [
             { size: "17 Inch Front", base: 3900, bulk: 3650 },
@@ -586,6 +650,28 @@ export default function ProductsPage() {
           sizes: [
             { size: "16 Inch", base: 4800, bulk: 4500 },
             { size: "19 Inch", base: 6500, bulk: 6200 }
+          ]
+        },
+        {
+          type: "bike",
+          typeName: "Bike Tyre",
+          modelName: "Commander Bike Sport",
+          badge: "Heavy Duty Bike",
+          desc: "High quality two-wheeler tires designed for optimal performance, stability, and control under heavy road conditions.",
+          specs: [
+            { label: "Rim Diameter", value: "17\" - 18\"" },
+            { label: "Speed Rating", value: "P (Up to 150 km/h)" },
+            { label: "Technology", value: "Reinforced Plies" },
+            { label: "Wet Traction", value: "Deep Channel Grooves" }
+          ],
+          images: [
+            bktBike1,
+            bktBike2,
+            bktBike3
+          ],
+          sizes: [
+            { size: "17 Inch Front", base: 2200, bulk: 2000 },
+            { size: "17 Inch Rear", base: 2900, bulk: 2750 }
           ]
         }
       ]
