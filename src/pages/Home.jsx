@@ -1,7 +1,9 @@
 import React from 'react';
 import Hero from '../components/Hero';
+import Promotions from '../components/Promotions';
 import About from '../components/About';
 import Brands from '../components/Brands';
+import Products from '../components/Products';
 import WhyChooseUs from '../components/WhyChooseUs';
 import Testimonials from '../components/Testimonials';
 
@@ -30,8 +32,10 @@ export default function Home() {
         onBookClick={handleBookClick} 
         onQuoteClick={handleQuoteClick} 
       />
+      <Promotions />
       <About />
       <Brands />
+      <Products />
       <WhyChooseUs />
       <Testimonials />
     </div>

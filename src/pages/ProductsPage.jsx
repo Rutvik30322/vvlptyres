@@ -17,6 +17,8 @@ export default function ProductsPage() {
 
   // Quote Calculator State
   const [calcBrand, setCalcBrand] = useState('apollo');
+  const [calcVariantType, setCalcVariantType] = useState('car');
+  const [calcSize, setCalcSize] = useState('15 Inch');
   const [calcQty, setCalcQty] = useState(4);
   const [deliveryType, setDeliveryType] = useState('normal'); 
   const [includeAlignment, setIncludeAlignment] = useState(true);
@@ -24,6 +26,10 @@ export default function ProductsPage() {
   const [includeNitrogen, setIncludeNitrogen] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const [logoBase64, setLogoBase64] = useState('');
+
+  // Active indices for variant and size in the detail modal
+  const [activeVariantIndex, setActiveVariantIndex] = useState(0);
+  const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
 
   useEffect(() => {
     fetch('/images/vvlp_logo.png')
@@ -48,210 +54,540 @@ export default function ProductsPage() {
     {
       id: "michelin",
       name: "Michelin",
-      modelName: "Pilot Sport 5",
-      badge: "Ultra Performance",
-      desc: "Premium sports tyre designed for high steering responsiveness, excellent dry grip, and high wet-braking safety.",
       rating: 5.0,
-      specs: [
-        { label: "Rim Diameter", value: "17\" - 21\"" },
-        { label: "Speed Rating", value: "Y (Up to 300 km/h)" },
-        { label: "Grip Class", value: "Wet Grip A / Dry A" },
-        { label: "Treadwear (UTQG)", value: "340 AA A" }
-      ],
-      images: [
-        "/images/tyre_michelin_sport.png",
-        "/images/tyre_installation.png",
-        "/images/customer_vehicles.png"
+      variants: [
+        {
+          type: "car",
+          typeName: "Car Tyre",
+          modelName: "Pilot Sport 5",
+          badge: "Ultra Performance",
+          desc: "Premium sports tyre designed for high steering responsiveness, excellent dry grip, and high wet-braking safety.",
+          specs: [
+            { label: "Rim Diameter", value: "17\" - 21\"" },
+            { label: "Speed Rating", value: "Y (Up to 300 km/h)" },
+            { label: "Grip Class", value: "Wet Grip A / Dry A" },
+            { label: "Treadwear (UTQG)", value: "340 AA A" }
+          ],
+          images: [
+            "/images/tyre_michelin_sport.png",
+            "/images/tyre_installation.png",
+            "/images/customer_vehicles.png"
+          ],
+          sizes: [
+            { size: "17 Inch", base: 9500, bulk: 9100 },
+            { size: "18 Inch", base: 12000, bulk: 11500 },
+            { size: "19 Inch", base: 15500, bulk: 14900 },
+            { size: "20 Inch", base: 19000, bulk: 18200 }
+          ]
+        },
+        {
+          type: "bike",
+          typeName: "Bike Tyre",
+          modelName: "Pilot Road 6",
+          badge: "Sport Touring Motorcycle",
+          desc: "The reference sport touring tyre for motorcycles. Outstanding wet grip and longevity with dual-compound technology.",
+          specs: [
+            { label: "Rim Diameter", value: "17\" Radial" },
+            { label: "Speed Rating", value: "W (Up to 270 km/h)" },
+            { label: "Technology", value: "2CT+ Dual Compound" },
+            { label: "Wet Traction", value: "Water Evergrip Sipes" }
+          ],
+          images: [
+            "/images/tyre_michelin_bike.png",
+            "/images/tyre_installation.png",
+            "/images/customer_vehicles.png"
+          ],
+          sizes: [
+            { size: "17 Inch Front", base: 6800, bulk: 6500 },
+            { size: "17 Inch Rear 160", base: 8200, bulk: 7850 },
+            { size: "17 Inch Rear 180", base: 9800, bulk: 9400 }
+          ]
+        }
       ]
     },
     {
       id: "bridgestone",
       name: "Bridgestone",
-      modelName: "Turanza T005",
-      badge: "Premium Comfort",
-      desc: "Flagship touring tyre utilizing nano-selective compounds for low rolling resistance, low road noise, and smooth highway comfort.",
       rating: 4.9,
-      specs: [
-        { label: "Rim Diameter", value: "15\" - 19\"" },
-        { label: "Speed Rating", value: "V / W" },
-        { label: "Road Noise", value: "69 dB (Ultra Silent)" },
-        { label: "Fuel Efficiency", value: "Grade B (Eco)" }
-      ],
-      images: [
-        "/images/tyre_bridgestone_turanza.png",
-        "/images/wheel_alignment.png",
-        "/images/customer_vehicles.png"
+      variants: [
+        {
+          type: "car",
+          typeName: "Car Tyre",
+          modelName: "Turanza T005",
+          badge: "Premium Comfort",
+          desc: "Flagship touring tyre utilizing nano-selective compounds for low rolling resistance, low road noise, and smooth highway comfort.",
+          specs: [
+            { label: "Rim Diameter", value: "15\" - 19\"" },
+            { label: "Speed Rating", value: "V / W" },
+            { label: "Road Noise", value: "69 dB (Ultra Silent)" },
+            { label: "Fuel Efficiency", value: "Grade B (Eco)" }
+          ],
+          images: [
+            "/images/tyre_bridgestone_turanza.png",
+            "/images/wheel_alignment.png",
+            "/images/customer_vehicles.png"
+          ],
+          sizes: [
+            { size: "15 Inch", base: 6500, bulk: 6200 },
+            { size: "16 Inch", base: 7800, bulk: 7450 },
+            { size: "17 Inch", base: 9200, bulk: 8800 },
+            { size: "18 Inch", base: 11500, bulk: 11000 }
+          ]
+        },
+        {
+          type: "bike",
+          typeName: "Bike Tyre",
+          modelName: "Battlax Hypersport S22",
+          badge: "Hypersport Motorcycle",
+          desc: "Premium motorcycle tyres utilizing multi-compound technology for high cornering grip and track-day handling performance.",
+          specs: [
+            { label: "Rim Diameter", value: "17\" Radial" },
+            { label: "Speed Rating", value: "W / Y (Superbike)" },
+            { label: "Rear Compound", value: "5-Layer (5LC) Silica" },
+            { label: "Stability", value: "Mono-Spiral Belt (MS-Belt)" }
+          ],
+          images: [
+            "/images/tyre_bridgestone_bike.png",
+            "/images/wheel_alignment.png",
+            "/images/customer_vehicles.png"
+          ],
+          sizes: [
+            { size: "17 Inch Front", base: 7500, bulk: 7100 },
+            { size: "17 Inch Rear", base: 9800, bulk: 9350 }
+          ]
+        }
       ]
     },
     {
       id: "mrf",
       name: "MRF",
-      modelName: "Perfinza CLUX",
-      badge: "Premium Comfort",
-      desc: "Luxury silica-infused tyres custom-tuned for high-speed tracking stability, vibration absorption, and premium road feedback.",
       rating: 4.8,
-      specs: [
-        { label: "Rim Diameter", value: "15\" - 18\"" },
-        { label: "Speed Rating", value: "H / V" },
-        { label: "Compound", value: "Silica-Rich Rubber" },
-        { label: "Side Strength", value: "Reinforced Bead" }
-      ],
-      images: [
-        "/images/tyre_mrf_perfinza.png",
-        "/images/tyre_installation.png",
-        "/images/customer_vehicles.png"
+      variants: [
+        {
+          type: "car",
+          typeName: "Car Tyre",
+          modelName: "Perfinza CLUX",
+          badge: "Premium Comfort",
+          desc: "Luxury silica-infused tyres custom-tuned for high-speed tracking stability, vibration absorption, and premium road feedback.",
+          specs: [
+            { label: "Rim Diameter", value: "15\" - 18\"" },
+            { label: "Speed Rating", value: "H / V" },
+            { label: "Compound", value: "Silica-Rich Rubber" },
+            { label: "Side Strength", value: "Reinforced Bead" }
+          ],
+          images: [
+            "/images/tyre_mrf_perfinza.png",
+            "/images/tyre_installation.png",
+            "/images/customer_vehicles.png"
+          ],
+          sizes: [
+            { size: "15 Inch", base: 6300, bulk: 6000 },
+            { size: "16 Inch", base: 7500, bulk: 7150 },
+            { size: "17 Inch", base: 8800, bulk: 8400 },
+            { size: "18 Inch", base: 10500, bulk: 10000 }
+          ]
+        },
+        {
+          type: "bike",
+          typeName: "Bike Tyre",
+          modelName: "Zapper FY / Mogrip",
+          badge: "High-Grip Two-Wheeler",
+          desc: "Specially designed tread patterns with wide block patterns to handle dirt, gravel, and urban streets with long-lasting life.",
+          specs: [
+            { label: "Rim Diameter", value: "17\" - 18\"" },
+            { label: "Rear Profile", value: "Tubeless Sporty Pattern" },
+            { label: "Compound", value: "Tough Compound Rubber" },
+            { label: "Bead type", value: "High-Tensile Wire Bead" }
+          ],
+          images: [
+            "/images/tyre_mrf_bike.png",
+            "/images/tyre_installation.png",
+            "/images/customer_vehicles.png"
+          ],
+          sizes: [
+            { size: "17 Inch Front", base: 2200, bulk: 2050 },
+            { size: "17 Inch Rear", base: 2800, bulk: 2650 },
+            { size: "18 Inch Rear", base: 3100, bulk: 2950 }
+          ]
+        }
       ]
     },
     {
       id: "apollo",
       name: "Apollo",
-      modelName: "Altrust SUV Radial",
-      badge: "Heavy Duty SUV",
-      desc: "Heavy-duty reinforced tyres built to withstand high load demands, rough roads, and high heat conditions on Indian highways.",
       rating: 4.7,
-      specs: [
-        { label: "Rim Diameter", value: "15\" - 17\"" },
-        { label: "Speed Rating", value: "T / H" },
-        { label: "Load Index", value: "102 (Extra Load XL)" },
-        { label: "Warranty", value: "5-Year Manufacturer" }
-      ],
-      images: [
-        "/images/tyre_apollo_altrust.png",
-        "/images/tyre_installation.png",
-        "/images/customer_vehicles.png"
+      variants: [
+        {
+          type: "car",
+          typeName: "Car Tyre",
+          modelName: "Altrust SUV Radial",
+          badge: "Heavy Duty SUV",
+          desc: "Heavy-duty reinforced tyres built to withstand high load demands, rough roads, and high heat conditions on Indian highways.",
+          specs: [
+            { label: "Rim Diameter", value: "15\" - 17\"" },
+            { label: "Speed Rating", value: "T / H" },
+            { label: "Load Index", value: "102 (Extra Load XL)" },
+            { label: "Warranty", value: "5-Year Manufacturer" }
+          ],
+          images: [
+            "/images/tyre_apollo_altrust.png",
+            "/images/tyre_installation.png",
+            "/images/customer_vehicles.png"
+          ],
+          sizes: [
+            { size: "15 Inch", base: 6200, bulk: 6000 },
+            { size: "16 Inch", base: 7400, bulk: 7100 },
+            { size: "17 Inch", base: 8600, bulk: 8300 }
+          ]
+        },
+        {
+          type: "bike",
+          typeName: "Bike Tyre",
+          modelName: "Alpha H1 Radial",
+          badge: "W-Rated Radial Motorcycle",
+          desc: "India's first steel-belted radial motorcycle tyre offering superior cornering grip, short stopping distance, and high tracking stability.",
+          specs: [
+            { label: "Rim Diameter", value: "17\" Sport Radial" },
+            { label: "Speed Rating", value: "W (Up to 270 km/h)" },
+            { label: "Belt", value: "0-Degree Steel Belt" },
+            { label: "Profile", value: "Dual Compound Sporty" }
+          ],
+          images: [
+            "/images/tyre_apollo_bike.png",
+            "/images/tyre_installation.png",
+            "/images/customer_vehicles.png"
+          ],
+          sizes: [
+            { size: "17 Inch Front", base: 4200, bulk: 3950 },
+            { size: "17 Inch Rear", base: 5800, bulk: 5500 }
+          ]
+        }
       ]
     },
     {
       id: "firestone",
       name: "Firestone",
-      modelName: "Destination A/T 2",
-      badge: "All-Terrain 4x4",
-      desc: "Aggressive tread blocks coupled with dynamic stone ejectors. Engineered to perform reliably in deep gravel, mud, and sand terrains.",
       rating: 4.6,
-      specs: [
-        { label: "Rim Diameter", value: "15\" - 20\"" },
-        { label: "Tread Pattern", value: "Self-Cleaning Offroad" },
-        { label: "Sidewall Ply", value: "3-Ply Polyester" },
-        { label: "Seasonality", value: "All-Weather M+S" }
-      ],
-      images: [
-        "/images/tyre_bridgestone_turanza.png", 
-        "/images/tyre_installation.png",
-        "/images/customer_vehicles.png"
+      variants: [
+        {
+          type: "car",
+          typeName: "Car Tyre",
+          modelName: "Destination A/T 2",
+          badge: "All-Terrain 4x4",
+          desc: "Aggressive tread blocks coupled with dynamic stone ejectors. Engineered to perform reliably in deep gravel, mud, and sand terrains.",
+          specs: [
+            { label: "Rim Diameter", value: "15\" - 20\"" },
+            { label: "Tread Pattern", value: "Self-Cleaning Offroad" },
+            { label: "Sidewall Ply", value: "3-Ply Polyester" },
+            { label: "Seasonality", value: "All-Weather M+S" }
+          ],
+          images: [
+            "/images/tyre_firestone_car.png",
+            "/images/tyre_installation.png",
+            "/images/customer_vehicles.png"
+          ],
+          sizes: [
+            { size: "15 Inch", base: 6300, bulk: 6000 },
+            { size: "16 Inch", base: 7600, bulk: 7300 },
+            { size: "17 Inch", base: 8900, bulk: 8550 },
+            { size: "18 Inch", base: 11200, bulk: 10800 }
+          ]
+        }
       ]
     },
     {
       id: "continental",
       name: "Continental",
-      modelName: "MaxContact MC6",
-      badge: "Sport Performance",
-      desc: "Dedicated German engineering featuring solid stabilizer blocks and sticky silica compound to maximize cornering response.",
       rating: 4.9,
-      specs: [
-        { label: "Rim Diameter", value: "16\" - 20\"" },
-        { label: "Speed Rating", value: "W / Y" },
-        { label: "Braking Distance", value: "Short-Stopping Compound" },
-        { label: "Noise Rating", value: "Acoustic Noise-Barriers" }
-      ],
-      images: [
-        "/images/tyre_michelin_sport.png",
-        "/images/wheel_alignment.png",
-        "/images/customer_vehicles.png"
+      variants: [
+        {
+          type: "car",
+          typeName: "Car Tyre",
+          modelName: "MaxContact MC6",
+          badge: "Sport Performance",
+          desc: "Dedicated German engineering featuring solid stabilizer blocks and sticky silica compound to maximize cornering response.",
+          specs: [
+            { label: "Rim Diameter", value: "16\" - 20\"" },
+            { label: "Speed Rating", value: "W / Y" },
+            { label: "Braking Distance", value: "Short-Stopping Compound" },
+            { label: "Noise Rating", value: "Acoustic Noise-Barriers" }
+          ],
+          images: [
+            "/images/tyre_continental_car.png",
+            "/images/wheel_alignment.png",
+            "/images/customer_vehicles.png"
+          ],
+          sizes: [
+            { size: "16 Inch", base: 7400, bulk: 7100 },
+            { size: "17 Inch", base: 9500, bulk: 9100 },
+            { size: "18 Inch", base: 12500, bulk: 11900 },
+            { size: "19 Inch", base: 16000, bulk: 15300 }
+          ]
+        },
+        {
+          type: "bike",
+          typeName: "Bike Tyre",
+          modelName: "ContiRoadAttack 4",
+          badge: "Hyper-Touring Motorcycle",
+          desc: "Premium sport touring motorcycle tyre utilizing TractionSkin raw compound and multi-grip design for safety in wet/dry curves.",
+          specs: [
+            { label: "Rim Diameter", value: "17\" Motorcycle" },
+            { label: "Speed Rating", value: "W (Up to 270 km/h)" },
+            { label: "Tread Tech", value: "RainGrip Compound" },
+            { label: "Manufacture", value: "Handmade in Germany" }
+          ],
+          images: [
+            "/images/tyre_continental_bike.png",
+            "/images/wheel_alignment.png",
+            "/images/customer_vehicles.png"
+          ],
+          sizes: [
+            { size: "17 Inch Front", base: 8200, bulk: 7800 },
+            { size: "17 Inch Rear", base: 11800, bulk: 11200 }
+          ]
+        }
       ]
     },
     {
       id: "yokohama",
       name: "Yokohama",
-      modelName: "Geolandar A/T G015",
-      badge: "Rugged Offroad",
-      desc: "High flotation radial with orange-oil compounds, offering severe snow certification and high durability on jagged rock paths.",
       rating: 4.8,
-      specs: [
-        { label: "Rim Diameter", value: "15\" - 22\"" },
-        { label: "Compound", value: "Enduro Orange-Oil" },
-        { label: "Groove Depth", value: "12.5/32\" Deep" },
-        { label: "Sidewall Armor", value: "Aggressive Block Guard" }
-      ],
-      images: [
-        "/images/tyre_apollo_altrust.png",
-        "/images/tyre_installation.png",
-        "/images/customer_vehicles.png"
+      variants: [
+        {
+          type: "car",
+          typeName: "Car Tyre",
+          modelName: "Geolandar A/T G015",
+          badge: "Rugged SUV Offroad",
+          desc: "High flotation radial with orange-oil compounds, offering severe snow certification and high durability on jagged rock paths.",
+          specs: [
+            { label: "Rim Diameter", value: "15\" - 22\"" },
+            { label: "Compound", value: "Enduro Orange-Oil" },
+            { label: "Groove Depth", value: "12.5/32\" Deep" },
+            { label: "Sidewall Armor", value: "Aggressive Block Guard" }
+          ],
+          images: [
+            "/images/tyre_yokohama_car.png",
+            "/images/tyre_installation.png",
+            "/images/customer_vehicles.png"
+          ],
+          sizes: [
+            { size: "15 Inch", base: 6800, bulk: 6450 },
+            { size: "16 Inch", base: 8200, bulk: 7850 },
+            { size: "17 Inch", base: 9900, bulk: 9450 },
+            { size: "18 Inch", base: 12500, bulk: 11950 }
+          ]
+        }
       ]
     },
     {
       id: "jk_tyre",
       name: "JK Tyre",
-      modelName: "UX Royale Radial",
-      badge: "Highway Commute",
-      desc: "A stable touring tyre offering long life and low rolling resistance. Optimized pattern blocks deliver balanced braking in rains.",
       rating: 4.6,
-      specs: [
-        { label: "Rim Diameter", value: "13\" - 16\"" },
-        { label: "Speed Rating", value: "T / H" },
-        { label: "Mileage rating", value: "80,000 km target" },
-        { label: "Warranty", value: "3-Year Unconditional" }
-      ],
-      images: [
-        "/images/tyre_mrf_perfinza.png",
-        "/images/tyre_installation.png",
-        "/images/customer_vehicles.png"
+      variants: [
+        {
+          type: "car",
+          typeName: "Car Tyre",
+          modelName: "UX Royale Radial",
+          badge: "Highway Commute",
+          desc: "A stable touring tyre offering long life and low rolling resistance. Optimized pattern blocks deliver balanced braking in rains.",
+          specs: [
+            { label: "Rim Diameter", value: "13\" - 16\"" },
+            { label: "Speed Rating", value: "T / H" },
+            { label: "Mileage rating", value: "80,000 km target" },
+            { label: "Warranty", value: "3-Year Unconditional" }
+          ],
+          images: [
+            "/images/tyre_jk_car.png",
+            "/images/tyre_installation.png",
+            "/images/customer_vehicles.png"
+          ],
+          sizes: [
+            { size: "13 Inch", base: 3400, bulk: 3200 },
+            { size: "14 Inch", base: 4200, bulk: 3950 },
+            { size: "15 Inch", base: 6415, bulk: 6215 },
+            { size: "16 Inch", base: 7600, bulk: 7350 }
+          ]
+        },
+        {
+          type: "bike",
+          typeName: "Bike Tyre",
+          modelName: "Blaze Rydr",
+          badge: "Two-Wheeler Commute",
+          desc: "Motorcycle radial engineered with special tread compounds for high directional stability, superior braking, and wet-traction security.",
+          specs: [
+            { label: "Rim Diameter", value: "17\" Motorcycle" },
+            { label: "Thread Structure", value: "Stiff Center Rib" },
+            { label: "Load Capacity", value: "Reinforced Sidewall" },
+            { label: "Safety", value: "Enhanced Cornering Grooves" }
+          ],
+          images: [
+            "/images/tyre_jk_bike.png",
+            "/images/tyre_installation.png",
+            "/images/customer_vehicles.png"
+          ],
+          sizes: [
+            { size: "17 Inch Front", base: 1800, bulk: 1700 },
+            { size: "17 Inch Rear", base: 2400, bulk: 2250 }
+          ]
+        }
       ]
     },
     {
       id: "ceat",
       name: "CEAT",
-      modelName: "SecuraDrive radial",
-      badge: "Comfort Touring",
-      desc: "High directional stability radial designed to reduce rolling resistance and absorb micro-impacts from potholes.",
       rating: 4.7,
-      specs: [
-        { label: "Rim Diameter", value: "14\" - 17\"" },
-        { label: "Speed Rating", value: "H / V" },
-        { label: "Pitch Tuning", value: "Variable Noise Pitch" },
-        { label: "Warranty", value: "5-Year Manufacturer" }
-      ],
-      images: [
-        "/images/tyre_bridgestone_turanza.png",
-        "/images/wheel_alignment.png",
-        "/images/customer_vehicles.png"
+      variants: [
+        {
+          type: "car",
+          typeName: "Car Tyre",
+          modelName: "SecuraDrive radial",
+          badge: "Comfort Touring",
+          desc: "High directional stability radial designed to reduce rolling resistance and absorb micro-impacts from potholes.",
+          specs: [
+            { label: "Rim Diameter", value: "14\" - 17\"" },
+            { label: "Speed Rating", value: "H / V" },
+            { label: "Pitch Tuning", value: "Variable Noise Pitch" },
+            { label: "Warranty", value: "5-Year Manufacturer" }
+          ],
+          images: [
+            "/images/tyre_ceat_car.png",
+            "/images/wheel_alignment.png",
+            "/images/customer_vehicles.png"
+          ],
+          sizes: [
+            { size: "14 Inch", base: 4300, bulk: 4050 },
+            { size: "15 Inch", base: 5800, bulk: 5500 },
+            { size: "16 Inch", base: 7100, bulk: 6750 },
+            { size: "17 Inch", base: 8500, bulk: 8100 }
+          ]
+        },
+        {
+          type: "bike",
+          typeName: "Bike Tyre",
+          modelName: "Zoom Rad X1",
+          badge: "Premium Radial Bike",
+          desc: "Specially formulated polymer compound providing high grip at high speed and excellent tracking on twisty mountain passes.",
+          specs: [
+            { label: "Rim Diameter", value: "17\" Motorcycle" },
+            { label: "Lean Angle", value: "Sport Compound Construction" },
+            { label: "Safety", value: "Optimum Aqua Control" },
+            { label: "Durability", value: "Radial Steel-Belted Plies" }
+          ],
+          images: [
+            "/images/tyre_ceat_bike.png",
+            "/images/wheel_alignment.png",
+            "/images/customer_vehicles.png"
+          ],
+          sizes: [
+            { size: "17 Inch Front", base: 2600, bulk: 2450 },
+            { size: "17 Inch Rear", base: 3800, bulk: 3550 }
+          ]
+        }
       ]
     },
     {
       id: "tvs",
       name: "TVS Eurogrip",
-      modelName: "Protorq Extreme",
-      badge: "Two-Wheeler Sport",
-      desc: "W-rated steel belted radial for performance motorcycles, delivering maximum lean angles and cornering footprint.",
       rating: 4.5,
-      specs: [
-        { label: "Rim Diameter", value: "17\" Radial" },
-        { label: "Belt type", value: "Zero-Degree Steel Belt" },
-        { label: "Rear Profile", value: "150/60 ZR17 Sport" },
-        { label: "Lean Rating", value: "Track Grip Compound" }
-      ],
-      images: [
-        "/images/tyre_michelin_sport.png",
-        "/images/tyre_installation.png",
-        "/images/customer_vehicles.png"
+      variants: [
+        {
+          type: "bike",
+          typeName: "Bike Tyre",
+          modelName: "Protorq Extreme",
+          badge: "Two-Wheeler Sport",
+          desc: "W-rated steel belted radial for performance motorcycles, delivering maximum lean angles and cornering footprint.",
+          specs: [
+            { label: "Rim Diameter", value: "17\" Radial" },
+            { label: "Belt type", value: "Zero-Degree Steel Belt" },
+            { label: "Rear Profile", value: "150/60 ZR17 Sport" },
+            { label: "Lean Rating", value: "Track Grip Compound" }
+          ],
+          images: [
+            "/images/tyre_tvs_bike.png",
+            "/images/tyre_installation.png",
+            "/images/customer_vehicles.png"
+          ],
+          sizes: [
+            { size: "17 Inch Front", base: 3900, bulk: 3650 },
+            { size: "17 Inch Rear 140", base: 5200, bulk: 4900 },
+            { size: "17 Inch Rear 150", base: 5900, bulk: 5550 }
+          ]
+        },
+        {
+          type: "car",
+          typeName: "Car Tyre",
+          modelName: "Durapro Radial",
+          badge: "Durable Commute",
+          desc: "Specially reinforced high-mileage car tyre built for rough city roads, daily taxi/commuter services, and long tread life.",
+          specs: [
+            { label: "Rim Diameter", value: "13\" - 15\"" },
+            { label: "Pitch Type", value: "Low-Noise Optimized Pitch" },
+            { label: "Construction", value: "Multi-Ply Polyester Cords" },
+            { label: "Wet Grip", value: "Deep Channel Grooves" }
+          ],
+          images: [
+            "/images/tyre_tvs_car.png",
+            "/images/tyre_installation.png",
+            "/images/customer_vehicles.png"
+          ],
+          sizes: [
+            { size: "13 Inch", base: 3200, bulk: 3000 },
+            { size: "14 Inch", base: 3900, bulk: 3650 },
+            { size: "15 Inch", base: 5100, bulk: 4800 }
+          ]
+        }
       ]
     },
     {
       id: "bkt",
       name: "BKT",
-      modelName: "Agrimax Tractor Lug",
-      badge: "Agricultural Heavy",
-      desc: "Premium tractor radial. Deep self-cleaning lugs deliver maximum drawbar traction and soil flotation in wet farm fields.",
       rating: 4.8,
-      specs: [
-        { label: "Rim Diameter", value: "24\" - 42\"" },
-        { label: "Lug Category", value: "R-1 Deep Flotation" },
-        { label: "Carcass type", value: "Steel Reinforced Bias" },
-        { label: "Traction Level", value: "High Draft Efficiency" }
-      ],
-      images: [
-        "/images/tyre_apollo_altrust.png",
-        "/images/tyre_installation.png",
-        "/images/customer_vehicles.png"
+      variants: [
+        {
+          type: "tractor_rear",
+          typeName: "Tractor Rear",
+          modelName: "Agrimax Tractor Lug",
+          badge: "Agricultural Heavy Rear",
+          desc: "Premium tractor radial. Deep self-cleaning lugs deliver maximum drawbar traction and soil flotation in wet farm fields.",
+          specs: [
+            { label: "Rim Diameter", value: "24\" - 42\"" },
+            { label: "Lug Category", value: "R-1 Deep Flotation" },
+            { label: "Carcass type", value: "Steel Reinforced Bias" },
+            { label: "Traction Level", value: "High Draft Efficiency" }
+          ],
+          images: [
+            "/images/tyre_bkt_agrimax.png",
+            "/images/tyre_installation.png",
+            "/images/customer_vehicles.png"
+          ],
+          sizes: [
+            { size: "28 Inch", base: 28000, bulk: 27000 },
+            { size: "30 Inch", base: 34000, bulk: 32800 },
+            { size: "38 Inch", base: 49000, bulk: 47500 }
+          ]
+        },
+        {
+          type: "tractor_front",
+          typeName: "Tractor Front",
+          modelName: "Commander Front",
+          badge: "Agricultural Front Steer",
+          desc: "Special front steering tractor tyre with strong three-rib tread pattern. Perfect for dry land steering stability and field work.",
+          specs: [
+            { label: "Rim Diameter", value: "16\" - 20\"" },
+            { label: "Rib Design", value: "3-Rib High Flotation" },
+            { label: "Sidewall Protection", value: "Stub Stubborn-Rub Guard" },
+            { label: "Compound", value: "Cut and Chip Resistant" }
+          ],
+          images: [
+            "/images/tyre_apollo_altrust.png",
+            "/images/tyre_installation.png",
+            "/images/customer_vehicles.png"
+          ],
+          sizes: [
+            { size: "16 Inch", base: 4800, bulk: 4500 },
+            { size: "19 Inch", base: 6500, bulk: 6200 }
+          ]
+        }
       ]
     }
   ];
@@ -317,14 +653,6 @@ export default function ProductsPage() {
     }
   ];
 
-  // Pricing details from handwritten note
-  const pricingRates = {
-    apollo: { name: 'Apollo Tyres', base: 6200, bulk: 6000 },
-    firestone: { name: 'Firestone Tyres', base: 6300, bulk: 6000 },
-    mrf: { name: 'MRF Tyres', base: 6300, bulk: 6000 },
-    jk: { name: 'JK Tyre', base: 6415, bulk: 6215 }
-  };
-
   // Batch lookup logic based on handwritten codes
   const handleBatchLookup = (e) => {
     e.preventDefault();
@@ -360,8 +688,11 @@ export default function ProductsPage() {
   };
 
   // Quote calculation logic
-  const activeRate = pricingRates[calcBrand];
-  const unitPrice = calcQty >= 4 ? activeRate.bulk : activeRate.base;
+  const selectedTyreObject = tyresCatalog.find(t => t.id === calcBrand) || tyresCatalog[0];
+  const activeCalcVariant = selectedTyreObject?.variants?.find(v => v.type === calcVariantType) || selectedTyreObject?.variants?.[0];
+  const activeCalcSize = activeCalcVariant?.sizes?.find(s => s.size === calcSize) || activeCalcVariant?.sizes?.[0];
+
+  const unitPrice = calcQty >= 4 ? (activeCalcSize?.bulk || activeCalcSize?.base || 0) : (activeCalcSize?.base || 0);
   const subtotal = unitPrice * calcQty;
   const deliveryCost = deliveryType === 'fast' ? 500 : 0;
   const alignmentCost = includeAlignment ? 800 : 0;
@@ -458,7 +789,9 @@ export default function ProductsPage() {
       };
 
       // ─── Rows ─────────────────────────────────────────────────────────────────
-      addRow(activeRate.name + ' Radial Tyres', 'Premium brand automotive grade tyres', unitPrice, calcQty, subtotal, true);
+      const itemDescription = `${selectedTyreObject?.name || ''} ${activeCalcVariant?.modelName || ''} (${calcSize})`;
+      const itemSub = `Premium brand ${activeCalcVariant?.typeName || 'tyre'}`;
+      addRow(itemDescription, itemSub, unitPrice, calcQty, subtotal, true);
       if (includeAlignment) addRow('3D Laser Wheel Alignment', '', 800, 1, 800);
       if (includeBalancing) addRow('Computerized Wheel Balancing', '', 600, 1, 600);
       if (includeNitrogen) addRow('Pure Nitrogen Filling', '', 50, calcQty, nitrogenCost);
@@ -493,7 +826,8 @@ export default function ProductsPage() {
       doc.text('VVLP Tyres & Alloy Wheels  |  Vadiwadi Genda Circle, Vadodara - 390007  |  +91 92653 44385', pageW / 2, y, { align: 'center' });
       doc.text('This is a system-generated pricing estimate. Prices may vary. Valid for 7 days from date of issue.', pageW / 2, y + 5, { align: 'center' });
 
-      doc.save(`VVLP-Quotation-${activeRate.name.replace(/\s+/g, '-')}.pdf`);
+      const pdfName = `VVLP-Quotation-${(selectedTyreObject?.name || 'Tyres').replace(/\s+/g, '-')}-${(activeCalcVariant?.modelName || '').replace(/\s+/g, '-')}.pdf`;
+      doc.save(pdfName);
       setIsDownloading(false);
     };
 
@@ -581,216 +915,299 @@ export default function ProductsPage() {
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
-          {activeCatalogData.map((item, idx) => (
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.05 }}
-              key={item.id}
-              onClick={() => {
-                setSelectedProduct(item);
-                setCarouselIndex(0);
-              }}
-              className="glass-card rounded-2xl p-6 border border-white/5 flex flex-col justify-between glass-card-hover cursor-pointer group relative overflow-hidden"
-            >
-              <div className="absolute top-0 right-0 w-24 h-24 bg-accent-orange/5 rounded-bl-full pointer-events-none group-hover:scale-125 transition-transform" />
-              <div>
-                {/* Product Thumbnail frame */}
-                <div className="w-full h-44 bg-dark-900 border border-white/5 rounded-xl overflow-hidden mb-5 relative flex items-center justify-center p-2 bg-gradient-to-b from-dark-950 to-black">
-                  <img
-                    src={item.images[0]}
-                    alt={item.modelName}
-                    className="w-full h-full object-contain opacity-90 group-hover:scale-105 group-hover:opacity-100 transition-all duration-500"
-                  />
-                  <div className="absolute inset-0 bg-dark-950/10 group-hover:bg-transparent transition-colors" />
-                  <span className="absolute bottom-3 right-3 text-[9px] font-orbitron font-bold tracking-widest text-accent-orange uppercase bg-dark-950/75 border border-white/5 px-2.5 py-1 rounded flex items-center gap-1">
-                    <Eye size={10} /> View Gallery
-                  </span>
-                </div>
+          {activeCatalogData.map((item, idx) => {
+            const isTyre = !!item.variants;
+            const primaryVariant = isTyre ? item.variants[0] : item;
+            const cardImg = isTyre ? primaryVariant.images[0] : item.images[0];
+            const cardModel = isTyre ? primaryVariant.modelName : item.modelName;
+            const cardBadge = isTyre ? primaryVariant.badge : item.badge;
+            const cardDesc = isTyre ? primaryVariant.desc : item.desc;
 
-                {/* Card Title & Brand Logo Integration */}
-                <div className="flex justify-between items-start mb-3">
-                  <div className="flex-grow">
-                    {/* Render brand logo component with hover highlights */}
-                    <div className="h-6 flex items-center mb-1 text-gray-400 group-hover:text-white transition-colors">
-                      <BrandLogo brandId={item.id} className="h-5 max-w-[130px]" />
-                    </div>
-                    <span className="text-[11px] text-gray-400 font-mono block mt-1.5">{item.modelName}</span>
+            return (
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.05 }}
+                key={item.id}
+                onClick={() => {
+                  setSelectedProduct(item);
+                  setCarouselIndex(0);
+                  setActiveVariantIndex(0);
+                  setSelectedSizeIndex(0);
+                }}
+                className="glass-card rounded-2xl p-6 border border-white/5 flex flex-col justify-between glass-card-hover cursor-pointer group relative overflow-hidden"
+              >
+                <div className="absolute top-0 right-0 w-24 h-24 bg-accent-orange/5 rounded-bl-full pointer-events-none group-hover:scale-125 transition-transform" />
+                <div>
+                  {/* Product Thumbnail frame */}
+                  <div className="w-full h-44 bg-dark-900 border border-white/5 rounded-xl overflow-hidden mb-5 relative flex items-center justify-center p-2 bg-gradient-to-b from-dark-950 to-black">
+                    <img
+                      src={cardImg}
+                      alt={cardModel}
+                      className="w-full h-full object-contain opacity-90 group-hover:scale-105 group-hover:opacity-100 transition-all duration-500"
+                    />
+                    <div className="absolute inset-0 bg-dark-950/10 group-hover:bg-transparent transition-colors" />
+                    <span className="absolute bottom-3 right-3 text-[9px] font-orbitron font-bold tracking-widest text-accent-orange uppercase bg-dark-950/75 border border-white/5 px-2.5 py-1 rounded flex items-center gap-1">
+                      <Eye size={10} /> View Gallery
+                    </span>
                   </div>
-                  <span className="text-[10px] text-accent-orange font-orbitron font-bold border border-accent-orange/20 px-2.5 py-0.5 rounded bg-accent-orange/5 select-none shrink-0">
-                    {item.rating} ★
+
+                  {/* Card Title & Brand Logo Integration */}
+                  <div className="flex justify-between items-start mb-3">
+                    <div className="flex-grow">
+                      {/* Render brand logo component with hover highlights */}
+                      <div className="h-6 flex items-center mb-1 text-gray-400 group-hover:text-white transition-colors">
+                        <BrandLogo brandId={item.id} className="h-5 max-w-[130px]" />
+                      </div>
+                      <span className="text-[11px] text-gray-400 font-mono block mt-1.5">{cardModel}</span>
+                      {isTyre && (
+                        <div className="flex flex-wrap gap-1 mt-2">
+                          {item.variants.map((v) => (
+                            <span
+                              key={v.type}
+                              className="text-[8px] font-orbitron font-bold tracking-wider px-1.5 py-0.5 rounded bg-white/5 border border-white/10 uppercase text-accent-orange"
+                            >
+                              {v.type === 'car' ? '🚗 Car' : v.type === 'bike' ? '🏍️ Bike' : v.type.includes('tractor') ? '🚜 Tractor' : v.type}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    <span className="text-[10px] text-accent-orange font-orbitron font-bold border border-accent-orange/20 px-2.5 py-0.5 rounded bg-accent-orange/5 select-none shrink-0">
+                      {item.rating} ★
+                    </span>
+                  </div>
+                  
+                  <span className="text-[9px] font-orbitron font-bold text-accent-red uppercase tracking-wider block mb-3">
+                    ✦ {cardBadge}
                   </span>
+
+                  <p className="text-xs text-gray-400 font-sans leading-relaxed mb-6 line-clamp-2">
+                    {cardDesc}
+                  </p>
                 </div>
-                
-                <span className="text-[9px] font-orbitron font-bold text-accent-red uppercase tracking-wider block mb-3">
-                  ✦ {item.badge}
-                </span>
 
-                <p className="text-xs text-gray-400 font-sans leading-relaxed mb-6 line-clamp-2">
-                  {item.desc}
-                </p>
-              </div>
-
-              <div className="flex justify-between items-center pt-4 border-t border-white/5">
-                <span className="text-xs font-orbitron font-bold text-gray-500 uppercase tracking-widest group-hover:text-white transition-colors flex items-center gap-1">
-                  Explore Details <ChevronRight size={12} className="group-hover:translate-x-1 transition-transform" />
-                </span>
-                <span className="text-[10px] font-mono text-gray-600 uppercase font-semibold">Multiple Angles</span>
-              </div>
-            </motion.div>
-          ))}
+                <div className="flex justify-between items-center pt-4 border-t border-white/5">
+                  <span className="text-xs font-orbitron font-bold text-gray-500 uppercase tracking-widest group-hover:text-white transition-colors flex items-center gap-1">
+                    Explore Details <ChevronRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                  </span>
+                  <span className="text-[10px] font-mono text-gray-600 uppercase font-semibold">{isTyre ? 'Sizes & Types' : 'Multiple Angles'}</span>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
 
         {/* Detailed Image Lightbox/Carousel Modal - Responsive Auto-Height layouts to fit all displays */}
         <AnimatePresence>
-          {selectedProduct && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 overflow-y-auto">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setSelectedProduct(null)}
-                className="fixed inset-0 bg-dark-950/90 backdrop-blur-sm"
-              />
+          {selectedProduct && (() => {
+            const isTyre = !!selectedProduct.variants;
+            const activeVar = isTyre ? selectedProduct.variants[activeVariantIndex] : selectedProduct;
+            
+            return (
+              <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 overflow-y-auto">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  onClick={() => setSelectedProduct(null)}
+                  className="fixed inset-0 bg-dark-950/90 backdrop-blur-sm"
+                />
 
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0, y: 30 }}
-                animate={{ scale: 1, opacity: 1, y: 0 }}
-                exit={{ scale: 0.9, opacity: 0, y: 30 }}
-                transition={{ type: "spring", damping: 25, stiffness: 350 }}
-                className="relative w-full max-w-4xl glass-card rounded-2xl border border-white/10 z-10 shadow-glass overflow-hidden flex flex-col md:flex-row max-h-[90vh] md:h-[580px] bg-dark-900"
-              >
-                {/* Left Side: Generous Responsive Image Carousel */}
-                <div className="w-full md:w-1/2 h-[240px] sm:h-[300px] md:h-full shrink-0 relative bg-dark-950 flex items-center justify-center overflow-hidden">
-                  <img
-                    src={selectedProduct.images[carouselIndex]}
-                    alt={`${selectedProduct.name} View`}
-                    className={`w-full h-full transition-all duration-500 ${
-                      carouselIndex === 2 ? 'object-cover' : 'object-contain p-4 md:p-8'
-                    }`}
-                  />
-                  
-                  {/* Left arrow */}
-                  <button
-                    onClick={() => handlePrevSlide(selectedProduct.images.length)}
-                    className="absolute left-4 p-2.5 rounded-full bg-dark-950/80 border border-white/5 hover:border-accent-orange text-white transition-colors z-10"
-                  >
-                    <ChevronLeft size={16} />
-                  </button>
-
-                  {/* Right arrow */}
-                  <button
-                    onClick={() => handleNextSlide(selectedProduct.images.length)}
-                    className="absolute right-4 p-2.5 rounded-full bg-dark-950/80 border border-white/5 hover:border-accent-orange text-white transition-colors z-10"
-                  >
-                    <ChevronRight size={16} />
-                  </button>
-
-                  {/* Dot Indicators */}
-                  <div className="absolute bottom-4 flex gap-1.5 z-10">
-                    {selectedProduct.images.map((_, i) => (
-                      <button
-                        key={i}
-                        onClick={() => setCarouselIndex(i)}
-                        className={`w-2.5 h-2.5 rounded-full transition-all ${
-                          carouselIndex === i 
-                            ? 'bg-accent-orange w-6' 
-                            : 'bg-white/30'
-                        }`}
-                      />
-                    ))}
-                  </div>
-
-                  {/* Angle Label Stamp */}
-                  <div className="absolute top-4 left-4 px-2.5 py-1 rounded bg-dark-950/75 border border-white/5 text-[9px] font-orbitron text-accent-orange uppercase tracking-widest z-10 select-none">
-                    {carouselIndex === 0 ? "Product Closeup" : carouselIndex === 1 ? "Profile View" : "Vehicle Fitment"}
-                  </div>
-                </div>
-
-                {/* Right Side: Specifications & Actions */}
-                <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between overflow-y-auto flex-1 md:max-h-full bg-dark-900 border-t md:border-t-0 md:border-l border-white/5">
-                  
-                  <div>
-                    {/* Header info */}
-                    <div className="flex justify-between items-center mb-4">
-                      <span className="text-[10px] font-orbitron font-bold text-accent-orange uppercase tracking-widest">
-                        {activeCatalog === 'tyres' ? "Tyre Specs" : "Alloy Rim Specs"}
-                      </span>
-                      <button
-                        onClick={() => setSelectedProduct(null)}
-                        className="p-1.5 rounded-lg hover:bg-white/5 text-gray-400 hover:text-white transition-colors"
-                      >
-                        <X size={18} />
-                      </button>
-                    </div>
-
-                    {/* Logo next to Model Name in details modal */}
-                    <div className="mb-4">
-                      <div className="h-8 flex items-center mb-1.5 text-accent-orange">
-                        <BrandLogo brandId={selectedProduct.id} className="h-6 max-w-[150px]" />
-                      </div>
-                      <span className="text-xs text-gray-500 font-mono block mt-1.5">{selectedProduct.modelName}</span>
-                    </div>
+                <motion.div
+                  initial={{ scale: 0.9, opacity: 0, y: 30 }}
+                  animate={{ scale: 1, opacity: 1, y: 0 }}
+                  exit={{ scale: 0.9, opacity: 0, y: 30 }}
+                  transition={{ type: "spring", damping: 25, stiffness: 350 }}
+                  className="relative w-full max-w-4xl glass-card rounded-2xl border border-white/10 z-10 shadow-glass overflow-hidden flex flex-col md:flex-row max-h-[90vh] md:h-[580px] bg-dark-900"
+                >
+                  {/* Left Side: Generous Responsive Image Carousel */}
+                  <div className="w-full md:w-1/2 h-[240px] sm:h-[300px] md:h-full shrink-0 relative bg-dark-950 flex items-center justify-center overflow-hidden">
+                    <img
+                      src={activeVar.images[carouselIndex]}
+                      alt={`${selectedProduct.name} View`}
+                      className={`w-full h-full transition-all duration-500 ${
+                        carouselIndex === 2 ? 'object-cover' : 'object-contain p-4 md:p-8'
+                      }`}
+                    />
                     
-                    <p className="text-xs text-gray-400 leading-relaxed font-sans mb-6">
-                      {selectedProduct.desc}
-                    </p>
+                    {/* Left arrow */}
+                    <button
+                      onClick={() => handlePrevSlide(activeVar.images.length)}
+                      className="absolute left-4 p-2.5 rounded-full bg-dark-950/80 border border-white/5 hover:border-accent-orange text-white transition-colors z-10"
+                    >
+                      <ChevronLeft size={16} />
+                    </button>
 
-                    {/* Specs Table */}
-                    <div className="border border-white/5 rounded-xl bg-dark-900/50 p-4 space-y-3 mb-6">
-                      <span className="text-[10px] font-orbitron font-bold text-gray-500 uppercase tracking-widest block mb-1">
-                        Technical Specs
-                      </span>
-                      {selectedProduct.specs.map((spec) => (
-                        <div key={spec.label} className="flex justify-between text-xs font-sans">
-                          <span className="text-gray-500 uppercase text-[10px] tracking-wider">{spec.label}</span>
-                          <span className="text-white font-semibold">{spec.value}</span>
-                        </div>
+                    {/* Right arrow */}
+                    <button
+                      onClick={() => handleNextSlide(activeVar.images.length)}
+                      className="absolute right-4 p-2.5 rounded-full bg-dark-950/80 border border-white/5 hover:border-accent-orange text-white transition-colors z-10"
+                    >
+                      <ChevronRight size={16} />
+                    </button>
+
+                    {/* Dot Indicators */}
+                    <div className="absolute bottom-4 flex gap-1.5 z-10">
+                      {activeVar.images.map((_, i) => (
+                        <button
+                          key={i}
+                          onClick={() => setCarouselIndex(i)}
+                          className={`w-2.5 h-2.5 rounded-full transition-all ${
+                            carouselIndex === i 
+                              ? 'bg-accent-orange w-6' 
+                              : 'bg-white/30'
+                          }`}
+                        />
                       ))}
                     </div>
+
+                    {/* Angle Label Stamp */}
+                    <div className="absolute top-4 left-4 px-2.5 py-1 rounded bg-dark-950/75 border border-white/5 text-[9px] font-orbitron text-accent-orange uppercase tracking-widest z-10 select-none">
+                      {carouselIndex === 0 ? "Product Closeup" : carouselIndex === 1 ? "Profile View" : "Vehicle Fitment"}
+                    </div>
                   </div>
 
-                  {/* Actions Area */}
-                  <div className="space-y-3 pt-6 border-t border-white/5">
-                    {/* If it is one of the handwritten priced tyres, bind it to estimator */}
-                    {pricingRates[selectedProduct.id] ? (
-                      <button
-                        onClick={() => {
-                          setCalcBrand(selectedProduct.id);
-                          setSelectedProduct(null);
-                          const el = document.getElementById('quote-calculator');
-                          if (el) el.scrollIntoView({ behavior: 'smooth' });
-                        }}
-                        className="w-full py-3.5 rounded-xl bg-gradient-orange-red text-white font-orbitron font-bold text-xs tracking-wider uppercase shadow-glow-orange hover:shadow-glow-red transition-all duration-300 flex items-center justify-center gap-2"
-                      >
-                        <Calculator size={14} className="shrink-0" />
-                        <span className="truncate">Load in Quote Estimator</span>
-                      </button>
-                    ) : (
-                      <a
-                        href={`https://wa.me/919265344385?text=Hello%20VVLP%20Tyres,%20I'm%20inquiring%20about%20the%20${selectedProduct.name}%20${selectedProduct.modelName}%20options.%20Please%20verify%20price.`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-full py-3.5 rounded-xl bg-gradient-orange-red text-white font-orbitron font-bold text-xs tracking-wider uppercase shadow-glow-orange hover:shadow-glow-red transition-all duration-300 flex items-center justify-center gap-2 text-center"
-                      >
-                        <PhoneCall size={14} className="shrink-0" />
-                        <span className="truncate">Request Custom Pricing</span>
-                      </a>
-                    )}
+                  {/* Right Side: Specifications & Actions */}
+                  <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between overflow-y-auto flex-1 md:max-h-full bg-dark-900 border-t md:border-t-0 md:border-l border-white/5">
                     
-                    <button
-                      onClick={() => setSelectedProduct(null)}
-                      className="w-full py-3 rounded-xl border border-white/10 hover:border-white/20 text-white font-orbitron text-[10px] font-bold tracking-wider uppercase transition-colors"
-                    >
-                      Return to Catalogue
-                    </button>
-                  </div>
+                    <div>
+                      {/* Header info */}
+                      <div className="flex justify-between items-center mb-4">
+                        <span className="text-[10px] font-orbitron font-bold text-accent-orange uppercase tracking-widest">
+                          {isTyre ? "Tyre Specs" : "Alloy Rim Specs"}
+                        </span>
+                        <button
+                          onClick={() => setSelectedProduct(null)}
+                          className="p-1.5 rounded-lg hover:bg-white/5 text-gray-400 hover:text-white transition-colors"
+                        >
+                          <X size={18} />
+                        </button>
+                      </div>
 
-                </div>
-              </motion.div>
-            </div>
-          )}
+                      {/* Logo next to Model Name in details modal */}
+                      <div className="mb-4">
+                        <div className="h-8 flex items-center mb-1.5 text-accent-orange">
+                          <BrandLogo brandId={selectedProduct.id} className="h-6 max-w-[150px]" />
+                        </div>
+                        <span className="text-xs text-gray-500 font-mono block mt-1.5">{activeVar.modelName}</span>
+                      </div>
+
+                      {/* Category Switcher Tabs */}
+                      {isTyre && selectedProduct.variants.length > 1 && (
+                        <div className="flex gap-2 mb-4 bg-dark-950 p-1 rounded-lg border border-white/5">
+                          {selectedProduct.variants.map((v, vIdx) => (
+                            <button
+                              key={v.type}
+                              onClick={() => {
+                                setActiveVariantIndex(vIdx);
+                                setCarouselIndex(0);
+                                setSelectedSizeIndex(0);
+                              }}
+                              className={`flex-1 py-1.5 rounded-md font-orbitron text-[10px] font-bold uppercase tracking-wider transition-all duration-300 ${
+                                activeVariantIndex === vIdx
+                                  ? 'bg-accent-orange text-white'
+                                  : 'text-gray-400 hover:text-white'
+                              }`}
+                            >
+                              {v.type === 'car' ? '🚗 Car' : v.type === 'bike' ? '🏍️ Bike' : '🚜 Tractor'}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Size Selector horizontal buttons */}
+                      {isTyre && activeVar.sizes && (
+                        <div className="mb-4">
+                          <label className="block text-[9px] font-orbitron font-bold text-gray-400 uppercase tracking-widest mb-2">
+                            Select Rim Size
+                          </label>
+                          <div className="flex flex-wrap gap-1.5">
+                            {activeVar.sizes.map((s, sIdx) => (
+                              <button
+                                key={s.size}
+                                onClick={() => setSelectedSizeIndex(sIdx)}
+                                className={`px-2.5 py-1.5 rounded border text-[10px] font-mono font-bold transition-all ${
+                                  selectedSizeIndex === sIdx
+                                    ? 'border-accent-orange bg-accent-orange/10 text-white'
+                                    : 'border-white/5 bg-dark-950 text-gray-400 hover:border-white/10'
+                                }`}
+                              >
+                                {s.size}
+                              </button>
+                            ))}
+                          </div>
+                          {activeVar.sizes[selectedSizeIndex] && (
+                            <span className="text-[10px] text-accent-orange font-mono block mt-2">
+                              Rate: ₹{activeVar.sizes[selectedSizeIndex].base} / unit (₹{activeVar.sizes[selectedSizeIndex].bulk} bulk)
+                            </span>
+                          )}
+                        </div>
+                      )}
+                      
+                      <p className="text-xs text-gray-400 leading-relaxed font-sans mb-6">
+                        {activeVar.desc}
+                      </p>
+
+                      {/* Specs Table */}
+                      <div className="border border-white/5 rounded-xl bg-dark-900/50 p-4 space-y-3 mb-6">
+                        <span className="text-[10px] font-orbitron font-bold text-gray-500 uppercase tracking-widest block mb-1">
+                          Technical Specs
+                        </span>
+                        {activeVar.specs.map((spec) => (
+                          <div key={spec.label} className="flex justify-between text-xs font-sans">
+                            <span className="text-gray-500 uppercase text-[10px] tracking-wider">{spec.label}</span>
+                            <span className="text-white font-semibold">{spec.value}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Actions Area */}
+                    <div className="space-y-3 pt-6 border-t border-white/5">
+                      {isTyre ? (
+                        <button
+                          onClick={() => {
+                            setCalcBrand(selectedProduct.id);
+                            setCalcVariantType(activeVar.type);
+                            if (activeVar.sizes && activeVar.sizes[selectedSizeIndex]) {
+                              setCalcSize(activeVar.sizes[selectedSizeIndex].size);
+                            }
+                            setSelectedProduct(null);
+                            const el = document.getElementById('quote-calculator');
+                            if (el) el.scrollIntoView({ behavior: 'smooth' });
+                          }}
+                          className="w-full py-3.5 rounded-xl bg-gradient-orange-red text-white font-orbitron font-bold text-xs tracking-wider uppercase shadow-glow-orange hover:shadow-glow-red transition-all duration-300 flex items-center justify-center gap-2"
+                        >
+                          <Calculator size={14} className="shrink-0" />
+                          <span className="truncate">Load in Quote Estimator</span>
+                        </button>
+                      ) : (
+                        <a
+                          href={`https://wa.me/919265344385?text=Hello%20VVLP%20Tyres,%20I'm%20inquiring%20about%20the%20${selectedProduct.name}%20${activeVar.modelName}%20alloy%2520wheels.%20Please%2520verify%2520price.`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full py-3.5 rounded-xl bg-gradient-orange-red text-white font-orbitron font-bold text-xs tracking-wider uppercase shadow-glow-orange hover:shadow-glow-red transition-all duration-300 flex items-center justify-center gap-2 text-center"
+                        >
+                          <PhoneCall size={14} className="shrink-0" />
+                          <span className="truncate">Request Custom Pricing</span>
+                        </a>
+                      )}
+                      
+                      <button
+                        onClick={() => setSelectedProduct(null)}
+                        className="w-full py-3 rounded-xl border border-white/10 hover:border-white/20 text-white font-orbitron text-[10px] font-bold tracking-wider uppercase transition-colors"
+                      >
+                        Return to Catalogue
+                      </button>
+                    </div>
+
+                  </div>
+                </motion.div>
+              </div>
+            );
+          })()}
         </AnimatePresence>
 
         {/* Section: Batch Code Stock Lookup (image metadata details B1426, B0626) */}
@@ -878,34 +1295,101 @@ export default function ProductsPage() {
                 Interactive Pricing Estimator
               </h2>
               <p className="text-gray-400 text-xs sm:text-sm font-sans mt-2">
-                Get an instant estimate for tyre replacement. Price values and promotional discounts are loaded directly from the dealer notebook.
+                Get an instant estimate for tyre replacement. Price values and promotional discounts are loaded dynamically for all multi-brand tyres.
               </p>
             </div>
 
             <div className="glass-card p-6 rounded-2xl border border-white/5 space-y-6">
               
-              {/* Brand Selector */}
+              {/* Brand Selector Dropdown */}
               <div>
                 <label className="block text-[10px] font-orbitron font-bold text-gray-400 uppercase tracking-widest mb-2.5">
-                  Select Tyre Model & Brand
+                  Select Tyre Brand
                 </label>
-                <div className="grid grid-cols-2 gap-3">
-                  {Object.keys(pricingRates).map((key) => (
-                    <button
-                      key={key}
-                      onClick={() => setCalcBrand(key)}
-                      className={`p-4 rounded-xl border text-left flex flex-col justify-between transition-all duration-300 ${
-                        calcBrand === key
-                          ? 'border-accent-orange bg-accent-orange/10 text-white shadow-glow-orange'
-                          : 'border-white/5 bg-dark-900 text-gray-400 hover:border-white/20'
-                      }`}
-                    >
-                      <span className="text-xs font-orbitron font-bold uppercase tracking-wider">{pricingRates[key].name}</span>
-                      <span className="text-base font-orbitron font-black text-white mt-2">₹{pricingRates[key].base}</span>
-                    </button>
+                <select
+                  value={calcBrand}
+                  onChange={(e) => {
+                    const brandId = e.target.value;
+                    setCalcBrand(brandId);
+                    const brandObj = tyresCatalog.find(t => t.id === brandId);
+                    if (brandObj && brandObj.variants && brandObj.variants.length > 0) {
+                      const firstVar = brandObj.variants[0];
+                      setCalcVariantType(firstVar.type);
+                      if (firstVar.sizes && firstVar.sizes.length > 0) {
+                        setCalcSize(firstVar.sizes[0].size);
+                      }
+                    }
+                  }}
+                  className="w-full p-3.5 rounded-xl bg-dark-900 border border-white/5 text-white font-orbitron text-xs font-bold uppercase tracking-wider focus:border-accent-orange outline-none cursor-pointer"
+                >
+                  {tyresCatalog.map((item) => (
+                    <option key={item.id} value={item.id} className="bg-dark-950 text-white font-sans font-normal">
+                      {item.name}
+                    </option>
                   ))}
-                </div>
+                </select>
               </div>
+
+              {/* Variant / Category Selector (only if multiple exist for that brand) */}
+              {selectedTyreObject?.variants && selectedTyreObject.variants.length > 1 && (
+                <div>
+                  <label className="block text-[10px] font-orbitron font-bold text-gray-400 uppercase tracking-widest mb-2.5">
+                    Tyre Category
+                  </label>
+                  <div className="flex gap-2">
+                    {selectedTyreObject.variants.map((v) => (
+                      <button
+                        key={v.type}
+                        type="button"
+                        onClick={() => {
+                          setCalcVariantType(v.type);
+                          if (v.sizes && v.sizes.length > 0) {
+                            setCalcSize(v.sizes[0].size);
+                          }
+                        }}
+                        className={`flex-1 py-3 rounded-lg border font-orbitron text-[10px] font-bold uppercase tracking-wider transition-all duration-300 ${
+                          calcVariantType === v.type
+                            ? 'border-accent-orange bg-accent-orange/10 text-white shadow-sm'
+                            : 'border-white/5 bg-dark-900 text-gray-500 hover:border-white/10'
+                        }`}
+                      >
+                        {v.type === 'car' ? '🚗 Car Tyre' : v.type === 'bike' ? '🏍️ Bike Tyre' : v.type.includes('tractor') ? '🚜 Tractor' : v.type}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Size Selector Grid with pricing */}
+              {activeCalcVariant?.sizes && (
+                <div>
+                  <label className="block text-[10px] font-orbitron font-bold text-gray-400 uppercase tracking-widest mb-2.5">
+                    Select Tyre Size & Price
+                  </label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {activeCalcVariant.sizes.map((s) => (
+                      <button
+                        key={s.size}
+                        type="button"
+                        onClick={() => setCalcSize(s.size)}
+                        className={`p-3.5 rounded-xl border text-left flex flex-col justify-between transition-all duration-300 ${
+                          calcSize === s.size
+                            ? 'border-accent-orange bg-accent-orange/15 text-white shadow-glow-orange scale-[1.01]'
+                            : 'border-white/5 bg-dark-900 text-gray-400 hover:border-white/15'
+                        }`}
+                      >
+                        <span className="text-[10px] font-orbitron font-bold uppercase tracking-wider">{s.size}</span>
+                        <span className="text-xs font-mono font-bold text-white mt-1.5">
+                          ₹{s.base}
+                          <span className="text-[9px] text-gray-500 font-sans font-normal block mt-0.5">
+                            Bulk rate: ₹{s.bulk} (qty 4+)
+                          </span>
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Quantity Selector */}
               <div>
@@ -1026,18 +1510,29 @@ export default function ProductsPage() {
                 {/* Details Breakdown */}
                 <div className="flex justify-between">
                   <span>Product Model Selection:</span>
-                  <span className="text-white font-semibold font-orbitron uppercase">{activeRate.name}</span>
+                  <span className="text-white font-semibold font-orbitron uppercase text-right">
+                    {selectedTyreObject?.name || ''} {activeCalcVariant?.modelName || ''}
+                  </span>
+                </div>
+
+                <div className="flex justify-between text-xs">
+                  <span>Size & Type:</span>
+                  <span className="text-gray-300 font-mono">
+                    {calcSize} | {activeCalcVariant?.typeName || 'Tyre'}
+                  </span>
                 </div>
                 
                 <div className="flex justify-between">
                   <span>Base Rate per Unit:</span>
-                  <span className="text-white font-mono">₹{activeRate.base}</span>
+                  <span className="text-white font-mono">₹{activeCalcSize?.base || 0}</span>
                 </div>
 
-                {calcQty >= 4 && (
-                  <div className="flex justify-between text-green-400">
+                {calcQty >= 4 && activeCalcSize && (
+                  <div className="flex justify-between text-green-400 text-xs">
                     <span>Applied Bulk Discount Rate:</span>
-                    <span className="font-mono">-₹{activeRate.base - activeRate.bulk} / tyre</span>
+                    <span className="font-mono">
+                      -₹{(activeCalcSize.base - activeCalcSize.bulk)} / tyre (₹{activeCalcSize.bulk} bulk)
+                    </span>
                   </div>
                 )}
 
@@ -1113,7 +1608,7 @@ export default function ProductsPage() {
                   </button>
                   
                   <a
-                    href={`https://wa.me/919265344385?text=Hello%20VVLP%20Tyres,%20I%20generated%20a%20website%20quote%20for%20${calcQty}%20${activeRate.name}%20tyres.%20Estimated%20Total:%20INR%20${total}.%20Please%20verify%20stock.`}
+                    href={`https://wa.me/919265344385?text=Hello%20VVLP%20Tyres,%20I%20generated%20a%20website%20quote%20for%20${calcQty}%20${selectedTyreObject?.name || ''}%20${activeCalcVariant?.modelName || ''}%20(${calcSize})%20tyres.%20Estimated%20Total:%20INR%20${total}.%20Please%20verify%20stock.`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-2 sm:px-4 py-2.5 sm:py-3 rounded-lg bg-gradient-orange-red text-white font-orbitron text-[10px] sm:text-xs font-bold uppercase tracking-wider shadow-glow-orange hover:shadow-glow-red transition-all duration-300 flex items-center justify-center gap-1.5 sm:gap-2 text-center"

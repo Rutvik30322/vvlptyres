@@ -3,9 +3,9 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, ContactShadows, Environment } from '@react-three/drei';
 import TyreModel from './TyreModel';
 
-export default function ThreeCanvas() {
+export default function ThreeCanvas({ rimColor, caliperColor, heightClass = "h-[300px]" }) {
   return (
-    <div className="w-full h-[400px] md:h-[600px] relative select-none">
+    <div className={`w-full ${heightClass} relative select-none`}>
       {/* Ambient background glow behind canvas */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 md:w-96 md:h-96 rounded-full bg-accent-orange/10 blur-[80px] pointer-events-none" />
 
@@ -43,7 +43,7 @@ export default function ThreeCanvas() {
 
           {/* Procedural 3D Tyre Model */}
           <group position={[0, 0.2, 0]}>
-            <TyreModel />
+            <TyreModel rimColor={rimColor} caliperColor={caliperColor} />
           </group>
 
           {/* Soft Ground Contact Shadows */}

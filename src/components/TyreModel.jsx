@@ -2,7 +2,7 @@ import React, { useRef, useMemo, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
-export default function TyreModel() {
+export default function TyreModel({ rimColor, caliperColor }) {
   const tyreRef = useRef();
   const wheelGroupRef = useRef();
 
@@ -114,6 +114,20 @@ export default function TyreModel() {
     metalness: 0.5,
     emissive: '#4d0012',
   }), []);
+
+  // Sync props to material properties dynamically
+  useEffect(() => {
+    if (rimColor && rimMaterial) {
+      rimMaterial.color.set(rimColor);
+    }
+  }, [rimColor, rimMaterial]);
+
+  useEffect(() => {
+    if (caliperColor && caliperMaterial) {
+      caliperMaterial.color.set(caliperColor);
+      caliperMaterial.emissive.set(caliperColor);
+    }
+  }, [caliperColor, caliperMaterial]);
 
   // Update animations every frame
   useFrame((state) => {
