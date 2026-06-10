@@ -26,7 +26,7 @@ export default function ServicesPage() {
       title: "Wheel Alignment",
       icon: <Compass size={28} />,
       desc: "3D laser sensor technology to measure and align all wheel angles. Adjusting camber, caster, and toe-in corrects vehicle drift, minimizes tread wear, and improves fuel economy.",
-      price: "₹800 onwards",
+      price: "₹150 onwards",
       benefit: "Saves tyres, corrects steering pull"
     },
     {
@@ -34,7 +34,7 @@ export default function ServicesPage() {
       title: "Wheel Balancing",
       icon: <Scale size={28} />,
       desc: "Computerized wheel balancer monitors dynamic weight distribution. Small counterweights are attached to the rim edges to neutralize vibration in steering wheel and chassis at high speeds.",
-      price: "₹600 onwards",
+      price: "₹50 onwards",
       benefit: "Eliminates steering wheel vibration"
     },
     {
@@ -50,7 +50,7 @@ export default function ServicesPage() {
       title: "Puncture Repair",
       icon: <Scissors size={28} />,
       desc: "Professional inside-out tubeless puncture repair. We dismount the tyre, clean the inner liner, and seal the puncture tunnel with high-grade vulcanized rubber plug-patches.",
-      price: "₹150 onwards",
+      price: "₹100 onwards",
       benefit: "Secure and durable safety seals"
     },
     {
@@ -58,7 +58,7 @@ export default function ServicesPage() {
       title: "Rim Straightening",
       icon: <Wrench size={28} />,
       desc: "Hydro-mechanical straightening of alloy and steel rims bent by potholes. This restores the wheel's roundness and radial runout to factory specification, stopping tubeless air leaks.",
-      price: "₹1,200 onwards",
+      price: "₹200 onwards",
       benefit: "Restores bent alloy wheels"
     }
   ];

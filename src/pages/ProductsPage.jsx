@@ -3,69 +3,57 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Shield, Zap, Search, Calculator, Check, ShoppingBag, Info, PhoneCall, Download, Printer, ChevronLeft, ChevronRight, X, Eye, ListFilter } from 'lucide-react';
 import BrandLogo from '../components/BrandLogo';
 
-// Import all tyre images from src/assets/Tyres Size/
-// Apollo
-import apolloBike1 from '../assets/Tyres Size/APOLLO BIKE TYRES/APOLLO 1.png';
-import apolloBike2 from '../assets/Tyres Size/APOLLO BIKE TYRES/APOLLO 2.png';
-import apolloBike3 from '../assets/Tyres Size/APOLLO BIKE TYRES/APOLLO 3.png';
-import apolloCar1 from '../assets/Tyres Size/APOLLO CAR TYRES/APOLLO CAR R13 .png';
-import apolloCar2 from '../assets/Tyres Size/APOLLO CAR TYRES/APOLLO CAR R17.png';
-import apolloCar3 from '../assets/Tyres Size/APOLLO CAR TYRES/APOLLO CAR R20.png';
+// Glob-import all tyre and alloy images dynamically
+const tyreImages = import.meta.glob('../assets/Tyres Size/**/*.{png,jpg,jpeg,webp,jfif}', { eager: true, import: 'default' });
+const alloyImages = import.meta.glob('../assets/Alloys/**/*.{png,jpg,jpeg,webp,jfif}', { eager: true, import: 'default' });
 
-// BKT
-import bktBike1 from '../assets/Tyres Size/BKT BIKE TYRES/BKT 1.png';
-import bktBike2 from '../assets/Tyres Size/BKT BIKE TYRES/BKT 2.png';
-import bktBike3 from '../assets/Tyres Size/BKT BIKE TYRES/BKT 3.png';
+// Dynamic mapping helpers
+const getTyreImages = (brand, type, fallbackImages = []) => {
+  let brandFolderName = brand.toUpperCase();
+  if (brandFolderName === 'JK_TYRE') brandFolderName = 'JK';
+  
+  // Use a regex/case-insensitive match to make finding folders highly robust
+  const folderPart = `${brandFolderName} ${type} TYRES`.replace(/\s+/g, ' ').toUpperCase();
+  
+  const matched = Object.keys(tyreImages)
+    .filter(key => {
+      const normalizedKey = key.toUpperCase().replace(/\s+/g, ' ');
+      return normalizedKey.includes(folderPart);
+    })
+    .sort((a, b) => {
+      // Natural sort by numeric suffix in filename
+      const aName = a.split('/').pop();
+      const bName = b.split('/').pop();
+      const numA = parseInt(aName.match(/\d+/)?.[0] || 0, 10);
+      const numB = parseInt(bName.match(/\d+/)?.[0] || 0, 10);
+      return numA - numB;
+    })
+    .map(key => tyreImages[key]);
+    
+  return matched.length > 0 ? matched : fallbackImages;
+};
 
-// CEAT
-import ceatBike1 from '../assets/Tyres Size/CEAT BIKE TYRES/CEAT BIKE 1.png';
-import ceatBike2 from '../assets/Tyres Size/CEAT BIKE TYRES/CEAT BIKE 2.png';
-import ceatBike3 from '../assets/Tyres Size/CEAT BIKE TYRES/CEAT BIKE 3.png';
-import ceatCar1 from '../assets/Tyres Size/CEAT CAR TYRES/CEAT R14.png';
-import ceatCar2 from '../assets/Tyres Size/CEAT CAR TYRES/CEAT R16.png';
-import ceatCar3 from '../assets/Tyres Size/CEAT CAR TYRES/CEAT R18.png';
+const getAlloyImages = (brand, fallbackImages = []) => {
+  let folderName = "";
+  if (brand === 'neo') folderName = 'NEO';
+  else if (brand === 'uno_minda') folderName = 'UNO MINDA';
+  else if (brand === 'taiwan_import') folderName = 'TAIWAN';
+  else folderName = brand.toUpperCase();
 
-// Continental
-import continentalBike1 from '../assets/Tyres Size/CONTINENTAL BIKE TYRES/CONTINENTAL BIKE 1.png';
-import continentalBike2 from '../assets/Tyres Size/CONTINENTAL BIKE TYRES/CONTINENTAL BIKE 2.png';
-import continentalBike3 from '../assets/Tyres Size/CONTINENTAL BIKE TYRES/CONTINENTAL BIKE 3.png';
-import continentalCar1 from '../assets/Tyres Size/CONTINENTAL CAR TYRES/CONTINENTAL CAR R12.png';
-import continentalCar2 from '../assets/Tyres Size/CONTINENTAL CAR TYRES/CONTINENTAL CAR R14.png';
-import continentalCar3 from '../assets/Tyres Size/CONTINENTAL CAR TYRES/CONTINENTAL CAR R17.png';
+  const folderPart = `../assets/Alloys/${folderName}/`.toUpperCase();
+  const matched = Object.keys(alloyImages)
+    .filter(key => key.toUpperCase().includes(folderPart))
+    .sort((a, b) => {
+      const aName = a.split('/').pop();
+      const bName = b.split('/').pop();
+      const numA = parseInt(aName.match(/\d+/)?.[0] || 0, 10);
+      const numB = parseInt(bName.match(/\d+/)?.[0] || 0, 10);
+      return numA - numB;
+    })
+    .map(key => alloyImages[key]);
 
-// JK
-import jkBike1 from '../assets/Tyres Size/JK BIKE TYRES/JK BIKE 1.png';
-import jkBike2 from '../assets/Tyres Size/JK BIKE TYRES/JK BIKE 2.png';
-import jkBike3 from '../assets/Tyres Size/JK BIKE TYRES/JK BIKE 3.png';
-import jkCar1 from '../assets/Tyres Size/JK CAR TYRES/JK R14.png';
-import jkCar2 from '../assets/Tyres Size/JK CAR TYRES/JK R16.png';
-import jkCar3 from '../assets/Tyres Size/JK CAR TYRES/JK R18.png';
-
-// Michelin
-import michelinBike1 from '../assets/Tyres Size/MICHELIN BIKE TYRES/MICHELIN BIKE 1.png';
-import michelinBike2 from '../assets/Tyres Size/MICHELIN BIKE TYRES/MICHELIN BIKE 2.png';
-import michelinBike3 from '../assets/Tyres Size/MICHELIN BIKE TYRES/MICHELIN BIKE 3.png';
-import michelinCar1 from '../assets/Tyres Size/MICHELIN CAR TYRES/MICHELIN R18.png';
-import michelinCar2 from '../assets/Tyres Size/MICHELIN CAR TYRES/MICHELIN R20.png';
-
-// MRF
-import mrfBike1 from '../assets/Tyres Size/MRF BIKE TYRES/MRF BIKE R17.png';
-import mrfBike2 from '../assets/Tyres Size/MRF BIKE TYRES/MRF BIKE R18.png';
-import mrfBike3 from '../assets/Tyres Size/MRF BIKE TYRES/MRF BIKE R19.png';
-import mrfCar1 from '../assets/Tyres Size/MRF CAR TYRES/MRF R12.png';
-import mrfCar2 from '../assets/Tyres Size/MRF CAR TYRES/MRF R14.png';
-import mrfCar3 from '../assets/Tyres Size/MRF CAR TYRES/MRF R16.png';
-import mrfCar4 from '../assets/Tyres Size/MRF CAR TYRES/MRF R20.png';
-
-// TVS
-import tvsBike1 from '../assets/Tyres Size/TVS BIKE TYRES/TVS BIKE 1.png';
-import tvsBike2 from '../assets/Tyres Size/TVS BIKE TYRES/TVS BIKE 2.png';
-import tvsBike3 from '../assets/Tyres Size/TVS BIKE TYRES/CEAT BIKE 3.png';
-
-// Yokohama
-import yokohamaCar1 from '../assets/Tyres Size/YOKOHAMA CAR TYRES/YOKOHAMA R14.png';
-import yokohamaCar2 from '../assets/Tyres Size/YOKOHAMA CAR TYRES/YOKOHAMA R16.png';
-import yokohamaCar3 from '../assets/Tyres Size/YOKOHAMA CAR TYRES/YOKOHAMA R20.png';
+  return matched.length > 0 ? matched : fallbackImages;
+};
 
 export default function ProductsPage() {
   // Tab selector state ('tyres' or 'alloys')
@@ -82,7 +70,7 @@ export default function ProductsPage() {
   // Quote Calculator State
   const [calcBrand, setCalcBrand] = useState('apollo');
   const [calcVariantType, setCalcVariantType] = useState('car');
-  const [calcSize, setCalcSize] = useState('15 Inch');
+  const [calcSize, setCalcSize] = useState('R13 (13 Inch)');
   const [calcQty, setCalcQty] = useState(4);
   const [deliveryType, setDeliveryType] = useState('normal'); 
   const [includeAlignment, setIncludeAlignment] = useState(true);
@@ -94,6 +82,47 @@ export default function ProductsPage() {
   // Active indices for variant and size in the detail modal
   const [activeVariantIndex, setActiveVariantIndex] = useState(0);
   const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
+
+  const [selectedSizeFilter, setSelectedSizeFilter] = useState('all');
+
+  const sizeImages = {
+    '15': '/images/15_inch.png',
+    '16': '/images/16_inch.png',
+    '17': '/images/17_inch.png',
+    '18': '/images/18_inch.png'
+  };
+
+  const productSupportsSize = (item, sizeFilter) => {
+    if (sizeFilter === 'all') return true;
+    if (item.variants) {
+      return item.variants.some(v => 
+        v.sizes && v.sizes.some(s => s.size.toLowerCase().includes(sizeFilter))
+      );
+    } else {
+      const sizeSpec = item.specs?.find(spec => spec.label.toLowerCase().includes('size'));
+      return sizeSpec ? sizeSpec.value.toLowerCase().includes(sizeFilter) : false;
+    }
+  };
+
+  useEffect(() => {
+    if (selectedProduct && selectedSizeFilter !== 'all') {
+      const isTyre = !!selectedProduct.variants;
+      if (isTyre) {
+        let found = false;
+        for (let vIdx = 0; vIdx < selectedProduct.variants.length; vIdx++) {
+          const v = selectedProduct.variants[vIdx];
+          const sIdx = v.sizes.findIndex(s => s.size.toLowerCase().includes(selectedSizeFilter));
+          if (sIdx !== -1) {
+            setActiveVariantIndex(vIdx);
+            setSelectedSizeIndex(sIdx);
+            setCarouselIndex(sIdx);
+            found = true;
+            break;
+          }
+        }
+      }
+    }
+  }, [selectedProduct, selectedSizeFilter]);
 
   useEffect(() => {
     fetch('/images/vvlp_logo.png')
@@ -132,15 +161,11 @@ export default function ProductsPage() {
             { label: "Grip Class", value: "Wet Grip A / Dry A" },
             { label: "Treadwear (UTQG)", value: "340 AA A" }
           ],
-          images: [
-            michelinCar1,
-            michelinCar2
-          ],
+          images: getTyreImages("michelin", "car", ["/images/tyre_installation.png"]),
           sizes: [
-            { size: "17 Inch", base: 9500, bulk: 9100 },
-            { size: "18 Inch", base: 12000, bulk: 11500 },
-            { size: "19 Inch", base: 15500, bulk: 14900 },
-            { size: "20 Inch", base: 19000, bulk: 18200 }
+            { size: "R17 (17 Inch)", base: 10500, bulk: 9900 },
+            { size: "R18 (18 Inch)", base: 12000, bulk: 11500 },
+            { size: "R20 (20 Inch)", base: 19000, bulk: 18200 }
           ]
         },
         {
@@ -155,15 +180,11 @@ export default function ProductsPage() {
             { label: "Technology", value: "2CT+ Dual Compound" },
             { label: "Wet Traction", value: "Water Evergrip Sipes" }
           ],
-          images: [
-            michelinBike1,
-            michelinBike2,
-            michelinBike3
-          ],
+          images: getTyreImages("michelin", "bike", ["/images/tyre_installation.png"]),
           sizes: [
             { size: "17 Inch Front", base: 6800, bulk: 6500 },
-            { size: "17 Inch Rear 160", base: 8200, bulk: 7850 },
-            { size: "17 Inch Rear 180", base: 9800, bulk: 9400 }
+            { size: "17 Inch Rear 150", base: 7500, bulk: 7200 },
+            { size: "17 Inch Rear 160", base: 8200, bulk: 7850 }
           ]
         }
       ]
@@ -185,11 +206,11 @@ export default function ProductsPage() {
             { label: "Road Noise", value: "69 dB (Ultra Silent)" },
             { label: "Fuel Efficiency", value: "Grade B (Eco)" }
           ],
-          images: [
+          images: getTyreImages("bridgestone", "car", [
             "/images/tyre_bridgestone_turanza.png",
             "/images/wheel_alignment.png",
             "/images/customer_vehicles.png"
-          ],
+          ]),
           sizes: [
             { size: "15 Inch", base: 6500, bulk: 6200 },
             { size: "16 Inch", base: 7800, bulk: 7450 },
@@ -209,11 +230,11 @@ export default function ProductsPage() {
             { label: "Rear Compound", value: "5-Layer (5LC) Silica" },
             { label: "Stability", value: "Mono-Spiral Belt (MS-Belt)" }
           ],
-          images: [
+          images: getTyreImages("bridgestone", "bike", [
             "/images/tyre_bridgestone_bike.png",
             "/images/wheel_alignment.png",
             "/images/customer_vehicles.png"
-          ],
+          ]),
           sizes: [
             { size: "17 Inch Front", base: 7500, bulk: 7100 },
             { size: "17 Inch Rear", base: 9800, bulk: 9350 }
@@ -238,17 +259,15 @@ export default function ProductsPage() {
             { label: "Compound", value: "Silica-Rich Rubber" },
             { label: "Side Strength", value: "Reinforced Bead" }
           ],
-          images: [
-            mrfCar1,
-            mrfCar2,
-            mrfCar3,
-            mrfCar4
-          ],
+          images: getTyreImages("mrf", "car", ["/images/tyre_installation.png"]),
           sizes: [
-            { size: "15 Inch", base: 6300, bulk: 6000 },
-            { size: "16 Inch", base: 7500, bulk: 7150 },
-            { size: "17 Inch", base: 8800, bulk: 8400 },
-            { size: "18 Inch", base: 10500, bulk: 10000 }
+            { size: "R12 (12 Inch)", base: 4800, bulk: 4550 },
+            { size: "R14 (14 Inch)", base: 6300, bulk: 6000 },
+            { size: "R16 (16 Inch)", base: 7500, bulk: 7150 },
+            { size: "R17 (17 Inch)", base: 8800, bulk: 8400 },
+            { size: "R18 (18 Inch)", base: 10500, bulk: 10000 },
+            { size: "R20 (20 Inch)", base: 13500, bulk: 12900 },
+            { size: "R24 (24 Inch)", base: 17500, bulk: 16800 }
           ]
         },
         {
@@ -263,15 +282,17 @@ export default function ProductsPage() {
             { label: "Compound", value: "Tough Compound Rubber" },
             { label: "Bead type", value: "High-Tensile Wire Bead" }
           ],
-          images: [
-            mrfBike1,
-            mrfBike2,
-            mrfBike3
-          ],
+          images: getTyreImages("mrf", "bike", ["/images/tyre_installation.png"]),
           sizes: [
-            { size: "17 Inch Front", base: 2200, bulk: 2050 },
-            { size: "17 Inch Rear", base: 2800, bulk: 2650 },
-            { size: "18 Inch Rear", base: 3100, bulk: 2950 }
+            { size: "17 Inch Variant 1", base: 2200, bulk: 2050 },
+            { size: "17 Inch Variant 2", base: 2400, bulk: 2250 },
+            { size: "17 Inch Variant 3", base: 2600, bulk: 2450 },
+            { size: "17 Inch Variant 4", base: 2800, bulk: 2650 },
+            { size: "17 Inch Variant 5", base: 2900, bulk: 2750 },
+            { size: "17 Inch Variant 6", base: 3000, bulk: 2850 },
+            { size: "R17 Sport Radial", base: 3100, bulk: 2950 },
+            { size: "R18 Sport Radial", base: 3400, bulk: 3250 },
+            { size: "R19 Sport Radial", base: 3800, bulk: 3600 }
           ]
         }
       ]
@@ -293,15 +314,15 @@ export default function ProductsPage() {
             { label: "Load Index", value: "102 (Extra Load XL)" },
             { label: "Warranty", value: "5-Year Manufacturer" }
           ],
-          images: [
-            apolloCar1,
-            apolloCar2,
-            apolloCar3
-          ],
+          images: getTyreImages("apollo", "car", ["/images/tyre_installation.png"]),
           sizes: [
-            { size: "15 Inch", base: 6200, bulk: 6000 },
-            { size: "16 Inch", base: 7400, bulk: 7100 },
-            { size: "17 Inch", base: 8600, bulk: 8300 }
+            { size: "R13 (13 Inch)", base: 5200, bulk: 4950 },
+            { size: "R15 (15 Inch)", base: 6500, bulk: 6200 },
+            { size: "R16 (16 Inch)", base: 7400, bulk: 7100 },
+            { size: "R17 (17 Inch)", base: 8600, bulk: 8300 },
+            { size: "R18 (18 Inch)", base: 9800, bulk: 9400 },
+            { size: "R20 (20 Inch)", base: 11500, bulk: 11000 },
+            { size: "R24 (24 Inch)", base: 15500, bulk: 14800 }
           ]
         },
         {
@@ -316,14 +337,12 @@ export default function ProductsPage() {
             { label: "Belt", value: "0-Degree Steel Belt" },
             { label: "Profile", value: "Dual Compound Sporty" }
           ],
-          images: [
-            apolloBike1,
-            apolloBike2,
-            apolloBike3
-          ],
+          images: getTyreImages("apollo", "bike", ["/images/tyre_installation.png"]),
           sizes: [
             { size: "17 Inch Front", base: 4200, bulk: 3950 },
-            { size: "17 Inch Rear", base: 5800, bulk: 5500 }
+            { size: "17 Inch Rear 140", base: 5000, bulk: 4750 },
+            { size: "17 Inch Rear 160", base: 5800, bulk: 5500 },
+            { size: "18 Inch Rear", base: 6500, bulk: 6200 }
           ]
         }
       ]
@@ -345,11 +364,11 @@ export default function ProductsPage() {
             { label: "Sidewall Ply", value: "3-Ply Polyester" },
             { label: "Seasonality", value: "All-Weather M+S" }
           ],
-          images: [
+          images: getTyreImages("firestone", "car", [
             "/images/tyre_firestone_car.png",
             "/images/tyre_installation.png",
             "/images/customer_vehicles.png"
-          ],
+          ]),
           sizes: [
             { size: "15 Inch", base: 6300, bulk: 6000 },
             { size: "16 Inch", base: 7600, bulk: 7300 },
@@ -376,16 +395,14 @@ export default function ProductsPage() {
             { label: "Braking Distance", value: "Short-Stopping Compound" },
             { label: "Noise Rating", value: "Acoustic Noise-Barriers" }
           ],
-          images: [
-            continentalCar1,
-            continentalCar2,
-            continentalCar3
-          ],
+          images: getTyreImages("continental", "car", ["/images/tyre_installation.png"]),
           sizes: [
-            { size: "16 Inch", base: 7400, bulk: 7100 },
-            { size: "17 Inch", base: 9500, bulk: 9100 },
-            { size: "18 Inch", base: 12500, bulk: 11900 },
-            { size: "19 Inch", base: 16000, bulk: 15300 }
+            { size: "R12 (12 Inch)", base: 5500, bulk: 5200 },
+            { size: "R14 (14 Inch)", base: 7400, bulk: 7100 },
+            { size: "R16 (16 Inch)", base: 8800, bulk: 8400 },
+            { size: "R17 (17 Inch)", base: 9500, bulk: 9100 },
+            { size: "R20 (20 Inch)", base: 14000, bulk: 13400 },
+            { size: "R24 (24 Inch)", base: 18500, bulk: 17800 }
           ]
         },
         {
@@ -400,14 +417,14 @@ export default function ProductsPage() {
             { label: "Tread Tech", value: "RainGrip Compound" },
             { label: "Manufacture", value: "Handmade in Germany" }
           ],
-          images: [
-            continentalBike1,
-            continentalBike2,
-            continentalBike3
-          ],
+          images: getTyreImages("continental", "bike", ["/images/tyre_installation.png"]),
           sizes: [
-            { size: "17 Inch Front", base: 8200, bulk: 7800 },
-            { size: "17 Inch Rear", base: 11800, bulk: 11200 }
+            { size: "17 Inch Front (100/90)", base: 6800, bulk: 6500 },
+            { size: "17 Inch Front (110/80)", base: 7200, bulk: 6900 },
+            { size: "17 Inch Rear 140", base: 8200, bulk: 7800 },
+            { size: "17 Inch Rear 150", base: 9200, bulk: 8800 },
+            { size: "17 Inch Rear 160", base: 10500, bulk: 10000 },
+            { size: "17 Inch Rear 180", base: 11800, bulk: 11200 }
           ]
         }
       ]
@@ -429,16 +446,15 @@ export default function ProductsPage() {
             { label: "Groove Depth", value: "12.5/32\" Deep" },
             { label: "Sidewall Armor", value: "Aggressive Block Guard" }
           ],
-          images: [
-            yokohamaCar1,
-            yokohamaCar2,
-            yokohamaCar3
-          ],
+          images: getTyreImages("yokohama", "car", ["/images/tyre_installation.png"]),
           sizes: [
-            { size: "15 Inch", base: 6800, bulk: 6450 },
-            { size: "16 Inch", base: 8200, bulk: 7850 },
-            { size: "17 Inch", base: 9900, bulk: 9450 },
-            { size: "18 Inch", base: 12500, bulk: 11950 }
+            { size: "R14 (14 Inch)", base: 6200, bulk: 5900 },
+            { size: "R15 (15 Inch)", base: 7200, bulk: 6850 },
+            { size: "R16 (16 Inch)", base: 8200, bulk: 7850 },
+            { size: "R17 (17 Inch)", base: 9900, bulk: 9450 },
+            { size: "R18 (18 Inch)", base: 12500, bulk: 11950 },
+            { size: "R20 (20 Inch)", base: 15800, bulk: 15100 },
+            { size: "R24 (24 Inch)", base: 20500, bulk: 19600 }
           ]
         }
       ]
@@ -460,16 +476,14 @@ export default function ProductsPage() {
             { label: "Mileage rating", value: "80,000 km target" },
             { label: "Warranty", value: "3-Year Unconditional" }
           ],
-          images: [
-            jkCar1,
-            jkCar2,
-            jkCar3
-          ],
+          images: getTyreImages("jk", "car", ["/images/tyre_installation.png"]),
           sizes: [
-            { size: "13 Inch", base: 3400, bulk: 3200 },
-            { size: "14 Inch", base: 4200, bulk: 3950 },
-            { size: "15 Inch", base: 6415, bulk: 6215 },
-            { size: "16 Inch", base: 7600, bulk: 7350 }
+            { size: "R12 (12 Inch)", base: 3400, bulk: 3200 },
+            { size: "R14 (14 Inch)", base: 4200, bulk: 3950 },
+            { size: "R16 (16 Inch)", base: 6415, bulk: 6215 },
+            { size: "R18 (18 Inch)", base: 7600, bulk: 7350 },
+            { size: "R20 (20 Inch)", base: 9800, bulk: 9400 },
+            { size: "R24 (24 Inch)", base: 13500, bulk: 12900 }
           ]
         },
         {
@@ -484,14 +498,14 @@ export default function ProductsPage() {
             { label: "Load Capacity", value: "Reinforced Sidewall" },
             { label: "Safety", value: "Enhanced Cornering Grooves" }
           ],
-          images: [
-            jkBike1,
-            jkBike2,
-            jkBike3
-          ],
+          images: getTyreImages("jk", "bike", ["/images/tyre_installation.png"]),
           sizes: [
             { size: "17 Inch Front", base: 1800, bulk: 1700 },
-            { size: "17 Inch Rear", base: 2400, bulk: 2250 }
+            { size: "17 Inch Rear 90/90", base: 2000, bulk: 1890 },
+            { size: "17 Inch Rear 100/90", base: 2200, bulk: 2050 },
+            { size: "17 Inch Rear 110/80", base: 2400, bulk: 2250 },
+            { size: "17 Inch Rear 120/70", base: 2600, bulk: 2450 },
+            { size: "18 Inch Rear", base: 2900, bulk: 2750 }
           ]
         }
       ]
@@ -513,16 +527,17 @@ export default function ProductsPage() {
             { label: "Pitch Tuning", value: "Variable Noise Pitch" },
             { label: "Warranty", value: "5-Year Manufacturer" }
           ],
-          images: [
-            ceatCar1,
-            ceatCar2,
-            ceatCar3
-          ],
+          images: getTyreImages("ceat", "car", ["/images/tyre_installation.png"]),
           sizes: [
-            { size: "14 Inch", base: 4300, bulk: 4050 },
-            { size: "15 Inch", base: 5800, bulk: 5500 },
-            { size: "16 Inch", base: 7100, bulk: 6750 },
-            { size: "17 Inch", base: 8500, bulk: 8100 }
+            { size: "R12 (12 Inch)", base: 3800, bulk: 3600 },
+            { size: "R14 Standard", base: 4300, bulk: 4050 },
+            { size: "R14 Premium", base: 4800, bulk: 4550 },
+            { size: "R16 Standard", base: 5900, bulk: 5600 },
+            { size: "R16 Premium", base: 7100, bulk: 6750 },
+            { size: "R17 (17 Inch)", base: 8500, bulk: 8100 },
+            { size: "R18 (18 Inch)", base: 10200, bulk: 9750 },
+            { size: "R20 (20 Inch)", base: 13000, bulk: 12400 },
+            { size: "R24 (24 Inch)", base: 17000, bulk: 16200 }
           ]
         },
         {
@@ -537,14 +552,14 @@ export default function ProductsPage() {
             { label: "Safety", value: "Optimum Aqua Control" },
             { label: "Durability", value: "Radial Steel-Belted Plies" }
           ],
-          images: [
-            ceatBike1,
-            ceatBike2,
-            ceatBike3
-          ],
+          images: getTyreImages("ceat", "bike", ["/images/tyre_installation.png"]),
           sizes: [
             { size: "17 Inch Front", base: 2600, bulk: 2450 },
-            { size: "17 Inch Rear", base: 3800, bulk: 3550 }
+            { size: "17 Inch Rear 90/90", base: 2800, bulk: 2650 },
+            { size: "17 Inch Rear 100/90", base: 3000, bulk: 2850 },
+            { size: "17 Inch Rear 110/80", base: 3200, bulk: 3050 },
+            { size: "17 Inch Rear 120/70", base: 3500, bulk: 3300 },
+            { size: "17 Inch Rear 140/60", base: 3800, bulk: 3550 }
           ]
         }
       ]
@@ -566,15 +581,14 @@ export default function ProductsPage() {
             { label: "Rear Profile", value: "150/60 ZR17 Sport" },
             { label: "Lean Rating", value: "Track Grip Compound" }
           ],
-          images: [
-            tvsBike1,
-            tvsBike2,
-            tvsBike3
-          ],
+          images: getTyreImages("tvs", "bike", ["/images/tyre_installation.png"]),
           sizes: [
             { size: "17 Inch Front", base: 3900, bulk: 3650 },
-            { size: "17 Inch Rear 140", base: 5200, bulk: 4900 },
-            { size: "17 Inch Rear 150", base: 5900, bulk: 5550 }
+            { size: "17 Inch Rear 100/90", base: 4200, bulk: 3950 },
+            { size: "17 Inch Rear 110/80", base: 4600, bulk: 4350 },
+            { size: "17 Inch Rear 120/70", base: 5200, bulk: 4900 },
+            { size: "17 Inch Rear 130/70", base: 5600, bulk: 5300 },
+            { size: "17 Inch Rear 150/60", base: 5900, bulk: 5550 }
           ]
         },
         {
@@ -589,11 +603,11 @@ export default function ProductsPage() {
             { label: "Construction", value: "Multi-Ply Polyester Cords" },
             { label: "Wet Grip", value: "Deep Channel Grooves" }
           ],
-          images: [
+          images: getTyreImages("tvs", "car", [
             "/images/tyre_tvs_car.png",
             "/images/tyre_installation.png",
             "/images/customer_vehicles.png"
-          ],
+          ]),
           sizes: [
             { size: "13 Inch", base: 3200, bulk: 3000 },
             { size: "14 Inch", base: 3900, bulk: 3650 },
@@ -619,11 +633,11 @@ export default function ProductsPage() {
             { label: "Carcass type", value: "Steel Reinforced Bias" },
             { label: "Traction Level", value: "High Draft Efficiency" }
           ],
-          images: [
+          images: getTyreImages("bkt", "tractor_rear", [
             "/images/tyre_bkt_agrimax.png",
             "/images/tyre_installation.png",
             "/images/customer_vehicles.png"
-          ],
+          ]),
           sizes: [
             { size: "28 Inch", base: 28000, bulk: 27000 },
             { size: "30 Inch", base: 34000, bulk: 32800 },
@@ -642,11 +656,11 @@ export default function ProductsPage() {
             { label: "Sidewall Protection", value: "Stub Stubborn-Rub Guard" },
             { label: "Compound", value: "Cut and Chip Resistant" }
           ],
-          images: [
+          images: getTyreImages("bkt", "tractor_front", [
             "/images/tyre_apollo_altrust.png",
             "/images/tyre_installation.png",
             "/images/customer_vehicles.png"
-          ],
+          ]),
           sizes: [
             { size: "16 Inch", base: 4800, bulk: 4500 },
             { size: "19 Inch", base: 6500, bulk: 6200 }
@@ -664,14 +678,14 @@ export default function ProductsPage() {
             { label: "Technology", value: "Reinforced Plies" },
             { label: "Wet Traction", value: "Deep Channel Grooves" }
           ],
-          images: [
-            bktBike1,
-            bktBike2,
-            bktBike3
-          ],
+          images: getTyreImages("bkt", "bike", ["/images/tyre_installation.png"]),
           sizes: [
             { size: "17 Inch Front", base: 2200, bulk: 2000 },
-            { size: "17 Inch Rear", base: 2900, bulk: 2750 }
+            { size: "17 Inch Rear 90/90", base: 2400, bulk: 2250 },
+            { size: "17 Inch Rear 100/90", base: 2600, bulk: 2450 },
+            { size: "17 Inch Rear 110/90", base: 2900, bulk: 2750 },
+            { size: "18 Inch Rear 120", base: 3200, bulk: 3050 },
+            { size: "18 Inch Rear 130", base: 3500, bulk: 3350 }
           ]
         }
       ]
@@ -693,11 +707,11 @@ export default function ProductsPage() {
         { label: "Offset (ET)", value: "+38 mm to +42 mm" },
         { label: "Certification", value: "ARAI / JWL Standards" }
       ],
-      images: [
+      images: getAlloyImages("neo", [
         "/images/alloy_neo_carbon.png",
         "/images/service_center.png",
         "/images/customer_vehicles.png"
-      ]
+      ])
     },
     {
       id: "uno_minda",
@@ -712,11 +726,11 @@ export default function ProductsPage() {
         { label: "Material", value: "A356.2 Gravity Cast Al" },
         { label: "Finish", value: "Dark Gunmetal Chrome" }
       ],
-      images: [
+      images: getAlloyImages("uno_minda", [
         "/images/alloy_minda_chrome.png",
         "/images/service_center.png",
         "/images/customer_vehicles.png"
-      ]
+      ])
     },
     {
       id: "taiwan_import",
@@ -731,8 +745,65 @@ export default function ProductsPage() {
         { label: "Offset Options", value: "Staggered Fitment offsets" },
         { label: "Construction", value: "Rotary Flow-Formed" }
       ],
-      images: [
+      images: getAlloyImages("taiwan_import", [
         "/images/alloy_taiwan_deep.png",
+        "/images/service_center.png",
+        "/images/customer_vehicles.png"
+      ])
+    },
+    {
+      id: "momo",
+      name: "Momo Alloys",
+      modelName: "Momo Stealth Black Sport",
+      badge: "Italian Styling",
+      desc: "Sleek matte black premium Italian-designed sports rims. Engineered for ultimate structural integrity, featuring a distinctive outer orange pinstripe detailing.",
+      rating: 4.8,
+      specs: [
+        { label: "Available Sizes", value: "15\", 16\", 17\", 18\"" },
+        { label: "PCD Pattern", value: "4×100 / 5×114.3" },
+        { label: "Material", value: "A356 Flow-Forged Light-Al" },
+        { label: "Finish", value: "Satin Matte Black & Orange Line" }
+      ],
+      images: [
+        "/images/alloy_momo.png",
+        "/images/service_center.png",
+        "/images/customer_vehicles.png"
+      ]
+    },
+    {
+      id: "bbs",
+      name: "BBS Alloys",
+      modelName: "BBS Super RS Classic Mesh",
+      badge: "German Racing Grade",
+      desc: "High-end multi-piece classic mesh rims featuring gold-plated central hex nuts and a high-mirror deep lip finish, optimized for performance stance.",
+      rating: 4.9,
+      specs: [
+        { label: "Available Sizes", value: "16\", 17\", 18\", 19\"" },
+        { label: "PCD Pattern", value: "5×120 / 5×112" },
+        { label: "Offset Options", value: "+22 mm to +35 mm" },
+        { label: "Construction", value: "Forged 2-Piece Mesh" }
+      ],
+      images: [
+        "/images/alloy_bbs.png",
+        "/images/service_center.png",
+        "/images/customer_vehicles.png"
+      ]
+    },
+    {
+      id: "enkei",
+      name: "Enkei Alloys",
+      modelName: "Enkei Racing Light Bronze",
+      badge: "Japanese Light-Weight",
+      desc: "Japanese MAT-technology racing rims finished in signature anodized dark bronze. Extremely light weight to maximize acceleration torque and cooling.",
+      rating: 4.8,
+      specs: [
+        { label: "Available Sizes", value: "15\", 16\", 17\", 18\"" },
+        { label: "PCD Pattern", value: "5×114.3 / 5×100" },
+        { label: "Weight", value: "6.8kg onwards (Ultra Light)" },
+        { label: "Technology", value: "Most Advanced MAT Technology" }
+      ],
+      images: [
+        "/images/alloy_enkei.png",
         "/images/service_center.png",
         "/images/customer_vehicles.png"
       ]
@@ -943,6 +1014,7 @@ export default function ProductsPage() {
   };
 
   const activeCatalogData = activeCatalog === 'tyres' ? tyresCatalog : alloysCatalog;
+  const filteredCatalogData = activeCatalogData.filter(item => productSupportsSize(item, selectedSizeFilter));
 
   return (
     <div className={`pt-24 min-h-screen bg-dark-950 text-white bg-grid relative overflow-hidden ${selectedProduct ? 'z-50' : ''}`}>
@@ -999,32 +1071,75 @@ export default function ProductsPage() {
           </button>
         </div>
 
-        {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
-          {activeCatalogData.map((item, idx) => {
-            const isTyre = !!item.variants;
-            const primaryVariant = isTyre ? item.variants[0] : item;
-            const cardImg = isTyre ? primaryVariant.images[0] : item.images[0];
-            const cardModel = isTyre ? primaryVariant.modelName : item.modelName;
-            const cardBadge = isTyre ? primaryVariant.badge : item.badge;
-            const cardDesc = isTyre ? primaryVariant.desc : item.desc;
-
-            return (
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.05 }}
-                key={item.id}
+        {/* Rim Size Filter */}
+        <div className="flex flex-col items-center mb-12 bg-dark-900/50 border border-white/5 p-6 rounded-2xl max-w-xl mx-auto backdrop-blur-sm">
+          <span className="text-[10px] font-orbitron font-bold text-gray-500 uppercase tracking-widest mb-3 flex items-center gap-1.5">
+            <ListFilter size={12} className="text-accent-orange animate-pulse" /> Filter By Rim Size
+          </span>
+          <div className="flex flex-wrap justify-center gap-2 w-full">
+            {['all', '15', '16', '17', '18'].map((size) => (
+              <button
+                key={size}
                 onClick={() => {
-                  setSelectedProduct(item);
-                  setCarouselIndex(0);
-                  setActiveVariantIndex(0);
-                  setSelectedSizeIndex(0);
+                  setSelectedSizeFilter(size);
+                  setSelectedProduct(null);
                 }}
-                className="glass-card rounded-2xl p-6 border border-white/5 flex flex-col justify-between glass-card-hover cursor-pointer group relative overflow-hidden"
+                className={`flex-1 sm:flex-initial min-w-[70px] sm:min-w-[80px] text-center px-4 py-2.5 rounded-lg font-orbitron text-[10px] sm:text-xs font-bold uppercase tracking-wider transition-all duration-300 border ${
+                  selectedSizeFilter === size
+                    ? 'bg-gradient-orange-red border-transparent text-white shadow-glow-orange scale-105'
+                    : 'border-white/5 bg-dark-950/50 text-gray-400 hover:border-white/10 hover:text-white'
+                }`}
               >
-                <div className="absolute top-0 right-0 w-24 h-24 bg-accent-orange/5 rounded-bl-full pointer-events-none group-hover:scale-125 transition-transform" />
+                {size === 'all' ? 'All Sizes' : `${size}" Rim`}
+              </button>
+            ))}
+          </div>
+          {selectedSizeFilter !== 'all' && (
+            <span className="text-[10px] text-accent-orange font-sans mt-3 block animate-pulse">
+              ★ Active Size Filter: displaying custom {selectedSizeFilter}-inch premium wheel/tyre gallery assets
+            </span>
+          )}
+        </div>
+
+        {/* Products Grid */}
+        {filteredCatalogData.length === 0 ? (
+          <div className="text-center py-20 border border-white/5 rounded-2xl bg-dark-900/50 mb-24 max-w-md mx-auto">
+            <p className="text-gray-400 font-sans text-sm mb-4">No products found matching {selectedSizeFilter}" rim size in this catalog.</p>
+            <button 
+              onClick={() => setSelectedSizeFilter('all')}
+              className="text-xs font-orbitron font-bold text-accent-orange uppercase tracking-wider hover:text-white transition-colors"
+            >
+              Clear Filter
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
+            {filteredCatalogData.map((item, idx) => {
+              const isTyre = !!item.variants;
+              const primaryVariant = isTyre ? item.variants[0] : item;
+              const cardImg = (selectedSizeFilter !== 'all' && sizeImages[selectedSizeFilter])
+                ? sizeImages[selectedSizeFilter]
+                : (isTyre ? primaryVariant.images[0] : item.images[0]);
+              const cardModel = isTyre ? primaryVariant.modelName : item.modelName;
+              const cardBadge = isTyre ? primaryVariant.badge : item.badge;
+              const cardDesc = isTyre ? primaryVariant.desc : item.desc;
+
+              return (
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.05 }}
+                  key={item.id}
+                  onClick={() => {
+                    setSelectedProduct(item);
+                    setCarouselIndex(0);
+                    setActiveVariantIndex(0);
+                    setSelectedSizeIndex(0);
+                  }}
+                  className="glass-card rounded-2xl p-6 border border-white/5 flex flex-col justify-between glass-card-hover cursor-pointer group relative overflow-hidden"
+                >
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-accent-orange/5 rounded-bl-full pointer-events-none group-hover:scale-125 transition-transform" />
                 <div>
                   {/* Product Thumbnail frame */}
                   <div className="w-full h-44 bg-dark-900 border border-white/5 rounded-xl overflow-hidden mb-5 relative flex items-center justify-center p-2 bg-gradient-to-b from-dark-950 to-black">
@@ -1084,12 +1199,16 @@ export default function ProductsPage() {
             );
           })}
         </div>
+      )}
 
         {/* Detailed Image Lightbox/Carousel Modal - Responsive Auto-Height layouts to fit all displays */}
         <AnimatePresence>
           {selectedProduct && (() => {
             const isTyre = !!selectedProduct.variants;
             const activeVar = isTyre ? selectedProduct.variants[activeVariantIndex] : selectedProduct;
+            const activeImage = (selectedSizeFilter !== 'all' && sizeImages[selectedSizeFilter])
+              ? sizeImages[selectedSizeFilter]
+              : (activeVar.images && activeVar.images[carouselIndex % activeVar.images.length]);
             
             return (
               <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 overflow-y-auto">
@@ -1111,47 +1230,49 @@ export default function ProductsPage() {
                   {/* Left Side: Generous Responsive Image Carousel */}
                   <div className="w-full md:w-1/2 h-[240px] sm:h-[300px] md:h-full shrink-0 relative bg-dark-950 flex items-center justify-center overflow-hidden">
                     <img
-                      src={activeVar.images[carouselIndex]}
+                      src={activeImage}
                       alt={`${selectedProduct.name} View`}
-                      className={`w-full h-full transition-all duration-500 ${
-                        carouselIndex === 2 ? 'object-cover' : 'object-contain p-4 md:p-8'
-                      }`}
+                      className="w-full h-full transition-all duration-500 object-contain p-4 md:p-8"
                     />
                     
-                    {/* Left arrow */}
-                    <button
-                      onClick={() => handlePrevSlide(activeVar.images.length)}
-                      className="absolute left-4 p-2.5 rounded-full bg-dark-950/80 border border-white/5 hover:border-accent-orange text-white transition-colors z-10"
-                    >
-                      <ChevronLeft size={16} />
-                    </button>
-
-                    {/* Right arrow */}
-                    <button
-                      onClick={() => handleNextSlide(activeVar.images.length)}
-                      className="absolute right-4 p-2.5 rounded-full bg-dark-950/80 border border-white/5 hover:border-accent-orange text-white transition-colors z-10"
-                    >
-                      <ChevronRight size={16} />
-                    </button>
-
-                    {/* Dot Indicators */}
-                    <div className="absolute bottom-4 flex gap-1.5 z-10">
-                      {activeVar.images.map((_, i) => (
+                    {selectedSizeFilter === 'all' && activeVar.images.length > 1 && (
+                      <>
+                        {/* Left arrow */}
                         <button
-                          key={i}
-                          onClick={() => setCarouselIndex(i)}
-                          className={`w-2.5 h-2.5 rounded-full transition-all ${
-                            carouselIndex === i 
-                              ? 'bg-accent-orange w-6' 
-                              : 'bg-white/30'
-                          }`}
-                        />
-                      ))}
-                    </div>
-
+                          onClick={() => handlePrevSlide(activeVar.images.length)}
+                          className="absolute left-4 p-2.5 rounded-full bg-dark-950/80 border border-white/5 hover:border-accent-orange text-white transition-colors z-10"
+                        >
+                          <ChevronLeft size={16} />
+                        </button>
+     
+                        {/* Right arrow */}
+                        <button
+                          onClick={() => handleNextSlide(activeVar.images.length)}
+                          className="absolute right-4 p-2.5 rounded-full bg-dark-950/80 border border-white/5 hover:border-accent-orange text-white transition-colors z-10"
+                        >
+                          <ChevronRight size={16} />
+                        </button>
+     
+                        {/* Dot Indicators */}
+                        <div className="absolute bottom-4 flex flex-wrap justify-center gap-1.5 px-4 max-w-[90%] z-10">
+                          {activeVar.images.map((_, i) => (
+                            <button
+                              key={i}
+                              onClick={() => setCarouselIndex(i)}
+                              className={`w-2 h-2 rounded-full transition-all ${
+                                carouselIndex === i 
+                                  ? 'bg-accent-orange w-5' 
+                                  : 'bg-white/30'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      </>
+                    )}
+ 
                     {/* Angle Label Stamp */}
                     <div className="absolute top-4 left-4 px-2.5 py-1 rounded bg-dark-950/75 border border-white/5 text-[9px] font-orbitron text-accent-orange uppercase tracking-widest z-10 select-none">
-                      {carouselIndex === 0 ? "Product Closeup" : carouselIndex === 1 ? "Profile View" : "Vehicle Fitment"}
+                      {selectedSizeFilter !== 'all' ? `${selectedSizeFilter} Inch Spec` : (carouselIndex === 0 ? "Product Closeup" : carouselIndex === 1 ? "Profile View" : carouselIndex === 2 ? "Vehicle Fitment" : `Angle Option ${carouselIndex + 1}`)}
                     </div>
                   </div>
 
@@ -1213,7 +1334,10 @@ export default function ProductsPage() {
                             {activeVar.sizes.map((s, sIdx) => (
                               <button
                                 key={s.size}
-                                onClick={() => setSelectedSizeIndex(sIdx)}
+                                onClick={() => {
+                                  setSelectedSizeIndex(sIdx);
+                                  setCarouselIndex(sIdx);
+                                }}
                                 className={`px-2.5 py-1.5 rounded border text-[10px] font-mono font-bold transition-all ${
                                   selectedSizeIndex === sIdx
                                     ? 'border-accent-orange bg-accent-orange/10 text-white'

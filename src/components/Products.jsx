@@ -6,6 +6,7 @@ import { ChevronRight, Zap } from 'lucide-react';
 import michelinSportImg from '../assets/Tyres Size/MICHELIN CAR TYRES/MICHELIN R18.png';
 import yokohamaCarImg from '../assets/Tyres Size/YOKOHAMA CAR TYRES/YOKOHAMA R14.png';
 import michelinBikeImg from '../assets/Tyres Size/MICHELIN BIKE TYRES/MICHELIN BIKE 1.png';
+import neoAlloyImg from '../assets/Alloys/NEO/NEO 1.jpeg';
 
 // 3D Tilt Card Subcomponent
 function ProductCard({ title, badge, desc, specs, accentColor, image, targetHash }) {
@@ -177,7 +178,7 @@ export default function Products() {
       badge: "ARAI Certified Alloys",
       desc: "High-grade diamond-cut alloy rims structured with carbon black. Built for ultimate impact resistance.",
       accentColor: "#ec4899",
-      image: "/images/alloy_neo_carbon.png",
+      image: neoAlloyImg,
       specs: [
         { label: "Rim Range", value: "14\" - 17\"" },
         { label: "Starting Price", value: "₹28,000 / Set" },

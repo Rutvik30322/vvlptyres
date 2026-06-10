@@ -57,6 +57,7 @@ export default function BrandLogo({ brandId, className = "h-6" }) {
 
     case 'jk_tyre':
     case 'jk':
+    case 'jk tyre':
       return (
         <img src={jkLogo} alt="JK Tyre" className={`${className} object-contain inline-block`} />
       );
@@ -99,6 +100,36 @@ export default function BrandLogo({ brandId, className = "h-6" }) {
           {/* Minda corporate logo text */}
           <path d="M5 5 L15 15 L25 5 Z" fill="#005bb7" />
           <text x="30" y="21" fontFamily="sans-serif" fontWeight="800" fontSize="14" fill="#ffffff">UNO MINDA</text>
+        </svg>
+      );
+
+    case 'momo':
+      return (
+        <svg viewBox="0 0 100 30" className={className} fill="currentColor">
+          <text x="5" y="21" fontFamily="sans-serif" fontWeight="900" fontSize="20" fontStyle="italic" fill="#ff6600" letterSpacing="1">MOMO</text>
+        </svg>
+      );
+
+    case 'bbs':
+      return (
+        <svg viewBox="0 0 100 30" className={className} fill="currentColor">
+          <text x="5" y="21" fontFamily="sans-serif" fontWeight="900" fontSize="22" fill="#ff003c" letterSpacing="1">BBS</text>
+        </svg>
+      );
+
+    case 'enkei':
+      return (
+        <svg viewBox="0 0 100 30" className={className} fill="currentColor">
+          <text x="5" y="21" fontFamily="sans-serif" fontWeight="900" fontSize="18" fill="#ffffff" letterSpacing="2">ENKEI</text>
+        </svg>
+      );
+
+    case 'taiwan_import':
+    case 'taiwan':
+      return (
+        <svg viewBox="0 0 145 30" className={className} fill="currentColor">
+          <text x="5" y="21" fontFamily="sans-serif" fontWeight="900" fontSize="18" fill="#ffffff" letterSpacing="2">TAIWAN</text>
+          <text x="92" y="21" fontFamily="sans-serif" fontWeight="500" fontSize="10" fill="#ff6600">ALLOYS</text>
         </svg>
       );
 

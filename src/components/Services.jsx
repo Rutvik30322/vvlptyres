@@ -23,42 +23,42 @@ export default function Services({ isModalOpen, setIsModalOpen, selectedService,
       title: "Wheel Alignment",
       icon: <Compass size={24} />,
       desc: "3D laser sensor technology to adjust your tyre angles, reducing wear and ensuring perfect driving line stability.",
-      price: "$45 onwards"
+      price: "₹150 onwards"
     },
     {
       id: "balancing",
       title: "Wheel Balancing",
       icon: <Scale size={24} />,
       desc: "Precise computerized weight distribution around the wheels to eliminate high-speed steering vibration.",
-      price: "$30 onwards"
+      price: "₹50 onwards"
     },
     {
       id: "puncture",
       title: "Puncture Repair",
       icon: <Scissors size={24} />,
       desc: "Inside-out tubeless plug and patch repairs meeting high safety standards for secure tyre rehabilitation.",
-      price: "$15 onwards"
+      price: "₹100 onwards"
+    },
+    {
+      id: "rim-straightening",
+      title: "Alloy Rim Straightening",
+      icon: <RefreshCw size={24} />,
+      desc: "Hydro-mechanical straightening of alloy rims bent by potholes, restoring roundness and factory specification.",
+      price: "₹200 onwards"
     },
     {
       id: "nitrogen",
       title: "Nitrogen Filling",
       icon: <Gauge size={24} />,
       desc: "99% pure nitrogen inflation to maintain stable tyre pressure, cooler running temperatures, and better mileage.",
-      price: "$5 per tyre"
+      price: "₹50 per tyre"
     },
     {
       id: "rotation",
       title: "Tyre Rotation",
       icon: <RefreshCw size={24} />,
       desc: "Strategic front-to-back cross swapping of wheels to ensure uniform wear patterns and prolong tyre tread lifespan.",
-      price: "$20 onwards"
-    },
-    {
-      id: "battery",
-      title: "Battery Services",
-      icon: <Battery size={24} />,
-      desc: "Diagnostics, charging checks, and replacements of multi-brand car batteries with onsite warranty logging.",
-      price: "Free checkup"
+      price: "₹100 onwards"
     },
     {
       id: "roadside",
