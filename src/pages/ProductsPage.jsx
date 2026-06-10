@@ -30,7 +30,7 @@ const getTyreImages = (brand, type, fallbackImages = []) => {
     })
     .map(key => tyreImages[key]);
     
-  return matched.length > 0 ? matched : fallbackImages;
+  return matched;
 };
 
 const getAlloyImages = (brand, fallbackImages = []) => {
@@ -52,7 +52,7 @@ const getAlloyImages = (brand, fallbackImages = []) => {
     })
     .map(key => alloyImages[key]);
 
-  return matched.length > 0 ? matched : fallbackImages;
+  return matched;
 };
 
 export default function ProductsPage() {
@@ -83,46 +83,6 @@ export default function ProductsPage() {
   const [activeVariantIndex, setActiveVariantIndex] = useState(0);
   const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
 
-  const [selectedSizeFilter, setSelectedSizeFilter] = useState('all');
-
-  const sizeImages = {
-    '15': '/images/15_inch.png',
-    '16': '/images/16_inch.png',
-    '17': '/images/17_inch.png',
-    '18': '/images/18_inch.png'
-  };
-
-  const productSupportsSize = (item, sizeFilter) => {
-    if (sizeFilter === 'all') return true;
-    if (item.variants) {
-      return item.variants.some(v => 
-        v.sizes && v.sizes.some(s => s.size.toLowerCase().includes(sizeFilter))
-      );
-    } else {
-      const sizeSpec = item.specs?.find(spec => spec.label.toLowerCase().includes('size'));
-      return sizeSpec ? sizeSpec.value.toLowerCase().includes(sizeFilter) : false;
-    }
-  };
-
-  useEffect(() => {
-    if (selectedProduct && selectedSizeFilter !== 'all') {
-      const isTyre = !!selectedProduct.variants;
-      if (isTyre) {
-        let found = false;
-        for (let vIdx = 0; vIdx < selectedProduct.variants.length; vIdx++) {
-          const v = selectedProduct.variants[vIdx];
-          const sIdx = v.sizes.findIndex(s => s.size.toLowerCase().includes(selectedSizeFilter));
-          if (sIdx !== -1) {
-            setActiveVariantIndex(vIdx);
-            setSelectedSizeIndex(sIdx);
-            setCarouselIndex(sIdx);
-            found = true;
-            break;
-          }
-        }
-      }
-    }
-  }, [selectedProduct, selectedSizeFilter]);
 
   useEffect(() => {
     fetch('/images/vvlp_logo.png')
@@ -810,6 +770,22 @@ export default function ProductsPage() {
     }
   ];
 
+  const filteredTyresCatalog = tyresCatalog.map(tyre => {
+    const validVariants = tyre.variants.map(v => ({
+      ...v,
+      images: getTyreImages(tyre.id, v.type)
+    })).filter(v => v.images.length > 0);
+    return {
+      ...tyre,
+      variants: validVariants
+    };
+  }).filter(tyre => tyre.variants.length > 0);
+
+  const filteredAlloysCatalog = alloysCatalog.map(alloy => ({
+    ...alloy,
+    images: getAlloyImages(alloy.id)
+  })).filter(alloy => alloy.images.length > 0);
+
   // Batch lookup logic based on handwritten codes
   const handleBatchLookup = (e) => {
     e.preventDefault();
@@ -845,7 +821,7 @@ export default function ProductsPage() {
   };
 
   // Quote calculation logic
-  const selectedTyreObject = tyresCatalog.find(t => t.id === calcBrand) || tyresCatalog[0];
+  const selectedTyreObject = filteredTyresCatalog.find(t => t.id === calcBrand) || filteredTyresCatalog[0];
   const activeCalcVariant = selectedTyreObject?.variants?.find(v => v.type === calcVariantType) || selectedTyreObject?.variants?.[0];
   const activeCalcSize = activeCalcVariant?.sizes?.find(s => s.size === calcSize) || activeCalcVariant?.sizes?.[0];
 
@@ -1013,8 +989,8 @@ export default function ProductsPage() {
     setCarouselIndex((prev) => (prev === imagesLength - 1 ? 0 : prev + 1));
   };
 
-  const activeCatalogData = activeCatalog === 'tyres' ? tyresCatalog : alloysCatalog;
-  const filteredCatalogData = activeCatalogData.filter(item => productSupportsSize(item, selectedSizeFilter));
+  const activeCatalogData = activeCatalog === 'tyres' ? filteredTyresCatalog : filteredAlloysCatalog;
+  const filteredCatalogData = activeCatalogData;
 
   return (
     <div className={`pt-24 min-h-screen bg-dark-950 text-white bg-grid relative overflow-hidden ${selectedProduct ? 'z-50' : ''}`}>
@@ -1071,55 +1047,17 @@ export default function ProductsPage() {
           </button>
         </div>
 
-        {/* Rim Size Filter */}
-        <div className="flex flex-col items-center mb-12 bg-dark-900/50 border border-white/5 p-6 rounded-2xl max-w-xl mx-auto backdrop-blur-sm">
-          <span className="text-[10px] font-orbitron font-bold text-gray-500 uppercase tracking-widest mb-3 flex items-center gap-1.5">
-            <ListFilter size={12} className="text-accent-orange animate-pulse" /> Filter By Rim Size
-          </span>
-          <div className="flex flex-wrap justify-center gap-2 w-full">
-            {['all', '15', '16', '17', '18'].map((size) => (
-              <button
-                key={size}
-                onClick={() => {
-                  setSelectedSizeFilter(size);
-                  setSelectedProduct(null);
-                }}
-                className={`flex-1 sm:flex-initial min-w-[70px] sm:min-w-[80px] text-center px-4 py-2.5 rounded-lg font-orbitron text-[10px] sm:text-xs font-bold uppercase tracking-wider transition-all duration-300 border ${
-                  selectedSizeFilter === size
-                    ? 'bg-gradient-orange-red border-transparent text-white shadow-glow-orange scale-105'
-                    : 'border-white/5 bg-dark-950/50 text-gray-400 hover:border-white/10 hover:text-white'
-                }`}
-              >
-                {size === 'all' ? 'All Sizes' : `${size}" Rim`}
-              </button>
-            ))}
-          </div>
-          {selectedSizeFilter !== 'all' && (
-            <span className="text-[10px] text-accent-orange font-sans mt-3 block animate-pulse">
-              ★ Active Size Filter: displaying custom {selectedSizeFilter}-inch premium wheel/tyre gallery assets
-            </span>
-          )}
-        </div>
-
         {/* Products Grid */}
         {filteredCatalogData.length === 0 ? (
           <div className="text-center py-20 border border-white/5 rounded-2xl bg-dark-900/50 mb-24 max-w-md mx-auto">
-            <p className="text-gray-400 font-sans text-sm mb-4">No products found matching {selectedSizeFilter}" rim size in this catalog.</p>
-            <button 
-              onClick={() => setSelectedSizeFilter('all')}
-              className="text-xs font-orbitron font-bold text-accent-orange uppercase tracking-wider hover:text-white transition-colors"
-            >
-              Clear Filter
-            </button>
+            <p className="text-gray-400 font-sans text-sm mb-4">No products found in this catalog.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
             {filteredCatalogData.map((item, idx) => {
               const isTyre = !!item.variants;
               const primaryVariant = isTyre ? item.variants[0] : item;
-              const cardImg = (selectedSizeFilter !== 'all' && sizeImages[selectedSizeFilter])
-                ? sizeImages[selectedSizeFilter]
-                : (isTyre ? primaryVariant.images[0] : item.images[0]);
+              const cardImg = isTyre ? primaryVariant.images[0] : item.images[0];
               const cardModel = isTyre ? primaryVariant.modelName : item.modelName;
               const cardBadge = isTyre ? primaryVariant.badge : item.badge;
               const cardDesc = isTyre ? primaryVariant.desc : item.desc;
@@ -1206,9 +1144,7 @@ export default function ProductsPage() {
           {selectedProduct && (() => {
             const isTyre = !!selectedProduct.variants;
             const activeVar = isTyre ? selectedProduct.variants[activeVariantIndex] : selectedProduct;
-            const activeImage = (selectedSizeFilter !== 'all' && sizeImages[selectedSizeFilter])
-              ? sizeImages[selectedSizeFilter]
-              : (activeVar.images && activeVar.images[carouselIndex % activeVar.images.length]);
+            const activeImage = activeVar.images && activeVar.images[carouselIndex % activeVar.images.length];
             
             return (
               <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 overflow-y-auto">
@@ -1235,7 +1171,7 @@ export default function ProductsPage() {
                       className="w-full h-full transition-all duration-500 object-contain p-4 md:p-8"
                     />
                     
-                    {selectedSizeFilter === 'all' && activeVar.images.length > 1 && (
+                    {activeVar.images.length > 1 && (
                       <>
                         {/* Left arrow */}
                         <button
@@ -1272,7 +1208,7 @@ export default function ProductsPage() {
  
                     {/* Angle Label Stamp */}
                     <div className="absolute top-4 left-4 px-2.5 py-1 rounded bg-dark-950/75 border border-white/5 text-[9px] font-orbitron text-accent-orange uppercase tracking-widest z-10 select-none">
-                      {selectedSizeFilter !== 'all' ? `${selectedSizeFilter} Inch Spec` : (carouselIndex === 0 ? "Product Closeup" : carouselIndex === 1 ? "Profile View" : carouselIndex === 2 ? "Vehicle Fitment" : `Angle Option ${carouselIndex + 1}`)}
+                      {carouselIndex === 0 ? "Product Closeup" : carouselIndex === 1 ? "Profile View" : carouselIndex === 2 ? "Vehicle Fitment" : `Angle Option ${carouselIndex + 1}`}
                     </div>
                   </div>
 
@@ -1521,7 +1457,7 @@ export default function ProductsPage() {
                   onChange={(e) => {
                     const brandId = e.target.value;
                     setCalcBrand(brandId);
-                    const brandObj = tyresCatalog.find(t => t.id === brandId);
+                    const brandObj = filteredTyresCatalog.find(t => t.id === brandId);
                     if (brandObj && brandObj.variants && brandObj.variants.length > 0) {
                       const firstVar = brandObj.variants[0];
                       setCalcVariantType(firstVar.type);
@@ -1532,7 +1468,7 @@ export default function ProductsPage() {
                   }}
                   className="w-full p-3.5 rounded-xl bg-dark-900 border border-white/5 text-white font-orbitron text-xs font-bold uppercase tracking-wider focus:border-accent-orange outline-none cursor-pointer"
                 >
-                  {tyresCatalog.map((item) => (
+                  {filteredTyresCatalog.map((item) => (
                     <option key={item.id} value={item.id} className="bg-dark-950 text-white font-sans font-normal">
                       {item.name}
                     </option>
