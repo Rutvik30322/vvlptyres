@@ -23,9 +23,31 @@ export default function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
     
+    const subjectLabel = 
+      formData.subject === 'quote' ? 'Request Custom Quotation' :
+      formData.subject === 'dealer' ? 'Dealership & Brand Warranties' :
+      formData.subject === 'roadside' ? 'Doorstep Roadside Help' : 'General Questions';
+
+    const text = `Hello VVLP Tyres,
+
+I have submitted an inquiry via the website contact form:
+*Name:* ${formData.name}
+*Phone:* ${formData.phone}
+*Email:* ${formData.email}
+*Category:* ${subjectLabel}
+
+*Message:*
+${formData.message}`;
+
+    const whatsappUrl = `https://wa.me/919265344385?text=${encodeURIComponent(text)}`;
+
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
+      
+      // Direct user to WhatsApp
+      window.open(whatsappUrl, '_blank');
+      
       setTimeout(() => setIsSubmitted(false), 5000); // clear success state after 5s
       
       // Reset form
@@ -36,7 +58,7 @@ export default function Contact() {
         subject: 'general',
         message: ''
       });
-    }, 1500);
+    }, 1000);
   };
 
   return (

@@ -33,6 +33,7 @@ export default {
       boxShadow: {
         'glow-orange': '0 0 15px rgba(255, 102, 0, 0.3)',
         'glow-red': '0 0 15px rgba(255, 0, 60, 0.3)',
+        'glow-green': '0 0 15px rgba(34, 197, 94, 0.3)',
         'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
       },
       animation: {
