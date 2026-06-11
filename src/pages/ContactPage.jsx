@@ -130,9 +130,9 @@ ${formData.message}`;
                 <div>
                   <h4 className="text-xs font-orbitron font-bold text-gray-400 uppercase tracking-widest">Dealer Address</h4>
                   <p className="text-sm font-sans text-white mt-1.5 leading-relaxed">
-                    4, Kunjal Apartment,<br />
-                    Opp. Ozone Building, Vadiwadi Genda Circle,<br />
-                    Vadodara, Gujarat - 390007
+                    VLP Enterprise, Atlantis Mall,<br />
+                    Dr Vikram Sarabhai Marg, opposite Ozone Building,<br />
+                    Alkapuri, Vadodara, Gujarat 390023
                   </p>
                 </div>
               </div>
@@ -167,11 +167,11 @@ ${formData.message}`;
 
             </div>
 
-            {/* Google Map Frame centered on Kunjal Apartment, Vadodara */}
+            {/* Google Map Frame centered on VLP Enterprise, Vadodara */}
             <div className="w-full h-80 rounded-2xl overflow-hidden border border-white/5 relative bg-dark-950 shadow-glass">
               <iframe
                 title="VVLP Vadodara Google Map"
-                src="https://maps.google.com/maps?q=Kunjal%20Apartment,%20Vadiwadi%20Genda%20Circle,%20Vadodara&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                src="https://maps.google.com/maps?q=VLP%20Enterprise,%20Atlantis%20Mall,%20Dr%20Vikram%20Sarabhai%20Marg,%20opposite%20Ozone%20Building,%20Alkapuri,%20Vadodara,%20Gujarat%20390023&t=&z=16&ie=UTF8&iwloc=&output=embed"
                 className="w-full h-full border-none grayscale invert contrast-[1.2] opacity-80"
                 allowFullScreen=""
                 loading="lazy"

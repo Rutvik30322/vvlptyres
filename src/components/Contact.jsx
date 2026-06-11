@@ -127,9 +127,9 @@ ${formData.message}`;
                 <div>
                   <h4 className="text-xs font-orbitron font-bold text-gray-400 uppercase tracking-widest">Vadodara Center</h4>
                   <p className="text-sm font-sans text-white mt-1 leading-relaxed">
-                    4, Kunjal Apartment,<br />
-                    Opp. Ozone Building, Vadiwadi Genda Circle,<br />
-                    Vadodara, Gujarat - 390007
+                    VLP Enterprise, Atlantis Mall,<br />
+                    Dr Vikram Sarabhai Marg, opposite Ozone Building,<br />
+                    Alkapuri, Vadodara, Gujarat 390023
                   </p>
                 </div>
               </div>
@@ -167,9 +167,9 @@ ${formData.message}`;
                 <h4 className="text-white font-orbitron font-black uppercase text-sm mb-1">
                   VVLP Main Service Bay
                 </h4>
-                <p className="text-[10px] text-gray-500 font-mono mb-4">GPS: 40.7128° N, 74.0060° W</p>
+                <p className="text-[10px] text-gray-500 font-mono mb-4">GPS: 22.3169° N, 73.1675° E</p>
                 <a 
-                  href="https://maps.google.com" 
+                  href="https://share.google/5Sth5X5P4KjxFwW6J" 
                   target="_blank" 
                   rel="noreferrer" 
                   className="px-4 py-2 rounded-lg bg-white/5 hover:bg-accent-orange/10 border border-white/10 hover:border-accent-orange/50 text-white font-orbitron text-[9px] font-bold tracking-widest uppercase transition-colors"

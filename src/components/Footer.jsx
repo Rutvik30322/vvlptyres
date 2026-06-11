@@ -35,7 +35,7 @@ export default function Footer() {
             <div className="space-y-2 pt-2 border-t border-white/5 text-gray-400">
               <div className="flex items-center gap-2">
                 <MapPin size={12} className="text-accent-orange" />
-                <span>4, Kunjal Apartment, Opp. Ozone Bldg, Genda Circle, Vadodara</span>
+                <span>VLP Enterprise, Atlantis Mall, Dr Vikram Sarabhai Marg, Vadodara</span>
               </div>
               <div className="flex items-center gap-2">
                 <Phone size={12} className="text-accent-orange" />

@@ -269,20 +269,36 @@ export default function ProductsPage() {
           badge: "Heavy Duty SUV",
           desc: "Heavy-duty reinforced tyres built to withstand high load demands, rough roads, and high heat conditions on Indian highways.",
           specs: [
-            { label: "Rim Diameter", value: "15\" - 17\"" },
-            { label: "Speed Rating", value: "T / H" },
+            { label: "Rim Diameter", value: "12\" - 20\"" },
+            { label: "Speed Rating", value: "T / H / V / W" },
             { label: "Load Index", value: "102 (Extra Load XL)" },
             { label: "Warranty", value: "5-Year Manufacturer" }
           ],
           images: getTyreImages("apollo", "car", ["/images/tyre_installation.png"]),
           sizes: [
-            { size: "R13 (13 Inch)", base: 5200, bulk: 4950 },
-            { size: "R15 (15 Inch)", base: 6500, bulk: 6200 },
-            { size: "R16 (16 Inch)", base: 7400, bulk: 7100 },
-            { size: "R17 (17 Inch)", base: 8600, bulk: 8300 },
-            { size: "R18 (18 Inch)", base: 9800, bulk: 9400 },
-            { size: "R20 (20 Inch)", base: 11500, bulk: 11000 },
-            { size: "R24 (24 Inch)", base: 15500, bulk: 14800 }
+            { size: "145/80 R12 Amazer 4G Life (12\")", base: 2962, bulk: 2820 },
+            { size: "145/80 R12 Amazer XP (12\")", base: 3048, bulk: 2900 },
+            { size: "145/70 R13 Amazer 3G (13\")", base: 2805, bulk: 2680 },
+            { size: "155/70 R13 Amazer 4G Life (13\")", base: 3472, bulk: 3300 },
+            { size: "165/70 R13 Amazer 4G Life (13\")", base: 3815, bulk: 3630 },
+            { size: "165/70 R14 Amazer 4G Life (14\")", base: 3572, bulk: 3400 },
+            { size: "175/65 R14 Amazer 4G Life (14\")", base: 4778, bulk: 4540 },
+            { size: "185/70 R14 Alnac 4G (14\")", base: 4779, bulk: 4540 },
+            { size: "165/80 R14 Amazer XP (14\")", base: 3846, bulk: 3650 },
+            { size: "195/65 R15 Alnac 4G (15\")", base: 6184, bulk: 5880 },
+            { size: "215/75 R15 Apterra HT5 (15\")", base: 6180, bulk: 5880 },
+            { size: "235/75 R15 Apterra AT2 (15\")", base: 8652, bulk: 8220 },
+            { size: "215/60 R16 Alnac 4GS (16\")", base: 6591, bulk: 6260 },
+            { size: "205/65 R16 Amazer 4G Life (16\")", base: 6512, bulk: 6190 },
+            { size: "215/60 R16 Apterra H/P (16\")", base: 9554, bulk: 9080 },
+            { size: "195/60 R16 Amperion EV (16\")", base: 7635, bulk: 7250 },
+            { size: "215/60 R17 Alnac 4G (17\")", base: 6737, bulk: 6400 },
+            { size: "235/65 R17 Apterra HT5 (17\")", base: 10769, bulk: 10230 },
+            { size: "215/60 R17 Apterra Cross (17\")", base: 6737, bulk: 6400 },
+            { size: "215/50 R17 Amperion EV (17\")", base: 9369, bulk: 8900 },
+            { size: "235/60 R18 Aspire 5 (18\")", base: 12580, bulk: 11950 },
+            { size: "235/55 R19 Aspire 5 (19\")", base: 15244, bulk: 14480 },
+            { size: "245/50 R20 Aspire 5 (20\")", base: 17142, bulk: 16280 }
           ]
         },
         {
@@ -514,12 +530,14 @@ export default function ProductsPage() {
           ],
           images: getTyreImages("ceat", "bike", ["/images/tyre_installation.png"]),
           sizes: [
-            { size: "17 Inch Front", base: 2600, bulk: 2450 },
-            { size: "17 Inch Rear 90/90", base: 2800, bulk: 2650 },
-            { size: "17 Inch Rear 100/90", base: 3000, bulk: 2850 },
-            { size: "17 Inch Rear 110/80", base: 3200, bulk: 3050 },
-            { size: "17 Inch Rear 120/70", base: 3500, bulk: 3300 },
-            { size: "17 Inch Rear 140/60", base: 3800, bulk: 3550 }
+            { size: "2.75-17 actiSTEER F1 (Front) (17\")", base: 1272, bulk: 1210 },
+            { size: "2.75-17 ACTIZIP F3 (Front) (17\")", base: 1280, bulk: 1220 },
+            { size: "3.00-17 ACTIGRIP R1 (17\")", base: 1497, bulk: 1420 },
+            { size: "100/90-17 actiGRIP R1 (Rear) (17\")", base: 1886, bulk: 1790 },
+            { size: "120/90-17 actiGRIP R6 (Rear) (17\")", base: 2610, bulk: 2480 },
+            { size: "3.00-18 actiGRIP R4 TT (Rear) (18\")", base: 1576, bulk: 1500 },
+            { size: "2.75-18 actiZIP R3 (Rear) (18\")", base: 1552, bulk: 1470 },
+            { size: "120/80-18 ACTIZIP R5 (Rear) (18\")", base: 2241, bulk: 2130 }
           ]
         }
       ]
@@ -956,7 +974,7 @@ export default function ProductsPage() {
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(7);
       doc.setTextColor(148, 163, 184);
-      doc.text('VVLP Tyres & Alloy Wheels  |  Vadiwadi Genda Circle, Vadodara - 390007  |  +91 92653 44385', pageW / 2, y, { align: 'center' });
+      doc.text('VVLP Tyres & Alloy Wheels  |  Atlantis Mall, Dr Vikram Sarabhai Marg, Vadodara - 390023  |  +91 92653 44385', pageW / 2, y, { align: 'center' });
       doc.text('This is a system-generated pricing estimate. Prices may vary. Valid for 7 days from date of issue.', pageW / 2, y + 5, { align: 'center' });
 
       const pdfName = `VVLP-Quotation-${(selectedTyreObject?.name || 'Tyres').replace(/\s+/g, '-')}-${(activeCalcVariant?.modelName || '').replace(/\s+/g, '-')}.pdf`;
