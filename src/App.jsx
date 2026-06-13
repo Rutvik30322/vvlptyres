@@ -3,6 +3,7 @@ import Loader from './components/Loader';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import { useHashRouter } from './components/Router';
+import Chatbot from './components/Chatbot';
 
 // Page Components
 import Home from './pages/Home';
@@ -61,6 +62,9 @@ export default function App() {
 
           {/* Footer Branding block */}
           <Footer />
+
+          {/* AI Chatbot Assistant Widget */}
+          <Chatbot />
         </div>
       )}
     </>

@@ -7,6 +7,10 @@ import michelinSportImg from '../assets/Tyres Size/MICHELIN CAR TYRES/MICHELIN R
 import yokohamaCarImg from '../assets/Tyres Size/YOKOHAMA CAR TYRES/YOKOHAMA R14.png';
 import michelinBikeImg from '../assets/Tyres Size/MICHELIN BIKE TYRES/MICHELIN BIKE 1.png';
 import neoAlloyImg from '../assets/Alloys/NEO/NEO 1.jpeg';
+import mrfPerfinzaImg from '../assets/Tyres Size/MRF CAR TYRES/MRF R17.png';
+import mrfMasseterImg from '../assets/Tyres Size/MRF BIKE TYRES/MRF BIKE 5.png';
+import ceatSecuraImg from '../assets/Tyres Size/CEAT CAR TYRES/CEAT CAR R16.png';
+import ceatZoomImg from '../assets/Tyres Size/CEAT BIKE TYRES/CEAT BIKE 4.png';
 
 // 3D Tilt Card Subcomponent
 function ProductCard({ title, badge, desc, specs, accentColor, image, targetHash }) {
@@ -183,6 +187,58 @@ export default function Products() {
         { label: "Rim Range", value: "14\" - 17\"" },
         { label: "Starting Price", value: "₹28,000 / Set" },
         { label: "PCD Patterns", value: "4x100 / 5x114.3" }
+      ],
+      targetHash: "#/products"
+    },
+    {
+      title: "MRF Perfinza CLX1",
+      badge: "Premium Comfort Car",
+      desc: "Luxury passenger car tyre designed for high-speed tracking stability, vibration absorption, and premium road feedback.",
+      accentColor: "#f97316",
+      image: mrfPerfinzaImg,
+      specs: [
+        { label: "Rim Range", value: "15\" - 18\"" },
+        { label: "Starting Price", value: "₹8,450" },
+        { label: "Compound", value: "Silica-Rich Rubber" }
+      ],
+      targetHash: "#/products"
+    },
+    {
+      title: "MRF Masseter X",
+      badge: "Sport Performance Bike",
+      desc: "Specially contoured compound providing high lean angles, cornering grip, and precise sporty handling.",
+      accentColor: "#f43f5e",
+      image: mrfMasseterImg,
+      specs: [
+        { label: "Rim Range", value: "17\" Rear" },
+        { label: "Starting Price", value: "₹3,750" },
+        { label: "Technology", value: "Contoured Profile" }
+      ],
+      targetHash: "#/products"
+    },
+    {
+      title: "CEAT SecuraDrive",
+      badge: "Premium Control Car",
+      desc: "High directional stability tyre designed to reduce rolling resistance and absorb micro-impacts from potholes.",
+      accentColor: "#06b6d4",
+      image: ceatSecuraImg,
+      specs: [
+        { label: "Rim Range", value: "14\" - 17\"" },
+        { label: "Starting Price", value: "₹4,100" },
+        { label: "Warranty", value: "5-Year Manufacturer" }
+      ],
+      targetHash: "#/products"
+    },
+    {
+      title: "CEAT Zoom Rad X1",
+      badge: "Premium Radial Bike",
+      desc: "Steel-belted radial construction with high-grip polymer compound for outstanding stability and water channel control.",
+      accentColor: "#a855f7",
+      image: ceatZoomImg,
+      specs: [
+        { label: "Rim Range", value: "17\" Radial" },
+        { label: "Starting Price", value: "₹2,950" },
+        { label: "Durability", value: "Radial Steel-Belted" }
       ],
       targetHash: "#/products"
     }

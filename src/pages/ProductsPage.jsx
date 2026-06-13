@@ -210,49 +210,52 @@ export default function ProductsPage() {
         {
           type: "car",
           typeName: "Car Tyre",
-          modelName: "Perfinza CLUX",
-          badge: "Premium Comfort",
-          desc: "Luxury silica-infused tyres custom-tuned for high-speed tracking stability, vibration absorption, and premium road feedback.",
+          modelName: "Perfinza / Wanderer / ZLX / ZVTV",
+          badge: "Premium Passenger Car Series",
+          desc: "Full range of MRF passenger car tyres. From luxury silica-infused Perfinza tyres to rugged Wanderer SUVs and long-lasting ZLX/ZVTV road tyres.",
           specs: [
-            { label: "Rim Diameter", value: "15\" - 18\"" },
-            { label: "Speed Rating", value: "H / V" },
-            { label: "Compound", value: "Silica-Rich Rubber" },
-            { label: "Side Strength", value: "Reinforced Bead" }
+            { label: "Rim Range", value: "12\" - 24\"" },
+            { label: "Top Models", value: "Perfinza CLX1, Wanderer, ZVTV, ZLX" },
+            { label: "Compound", value: "Silica-infused / Carbon Black" },
+            { label: "Warranty", value: "6-Year Manufacturer" }
           ],
           images: getTyreImages("mrf", "car", ["/images/tyre_installation.png"]),
           sizes: [
-            { size: "R12 (12 Inch)", base: 4800, bulk: 4550 },
-            { size: "R14 (14 Inch)", base: 6300, bulk: 6000 },
-            { size: "R16 (16 Inch)", base: 7500, bulk: 7150 },
-            { size: "R17 (17 Inch)", base: 8800, bulk: 8400 },
-            { size: "R18 (18 Inch)", base: 10500, bulk: 10000 },
-            { size: "R20 (20 Inch)", base: 13500, bulk: 12900 },
-            { size: "R24 (24 Inch)", base: 17500, bulk: 16800 }
+            { size: "145/80 R12 ZVTV (12\")", base: 3250, bulk: 3100, imageIndex: 0 },
+            { size: "165/70 R14 ZLX (14\")", base: 4120, bulk: 3950, imageIndex: 1 },
+            { size: "185/65 R15 ZVTS (15\")", base: 4850, bulk: 4600, imageIndex: 1 },
+            { size: "195/55 R16 Ecotred (16\")", base: 6200, bulk: 5900, imageIndex: 2 },
+            { size: "205/65 R16 Wanderer Street (16\")", base: 6600, bulk: 6300, imageIndex: 2 },
+            { size: "215/60 R17 Perfinza CLX1 (17\")", base: 8450, bulk: 8050, imageIndex: 3 },
+            { size: "225/55 R18 Wanderer Sport (18\")", base: 10500, bulk: 10000, imageIndex: 4 },
+            { size: "235/65 R17 Wanderer A/T (17\")", base: 8900, bulk: 8500, imageIndex: 3 },
+            { size: "255/50 R20 Markus SUV (20\")", base: 14800, bulk: 14100, imageIndex: 5 },
+            { size: "275/40 R24 Perfinza CLY1 (24\")", base: 18500, bulk: 17600, imageIndex: 6 }
           ]
         },
         {
           type: "bike",
           typeName: "Bike Tyre",
-          modelName: "Zapper FY / Mogrip",
-          badge: "High-Grip Two-Wheeler",
-          desc: "Specially designed tread patterns with wide block patterns to handle dirt, gravel, and urban streets with long-lasting life.",
+          modelName: "Masseter / Mogrip / Zapper / Nylogrip",
+          badge: "High-Performance Two-Wheeler Series",
+          desc: "India's most trusted two-wheeler tyres. Zapper daily street radials, Mogrip aggressive dual-purpose blocks, and premium cornering-focused Masseter performance radials.",
           specs: [
-            { label: "Rim Diameter", value: "17\" - 18\"" },
-            { label: "Rear Profile", value: "Tubeless Sporty Pattern" },
-            { label: "Compound", value: "Tough Compound Rubber" },
-            { label: "Bead type", value: "High-Tensile Wire Bead" }
+            { label: "Rim Range", value: "17\" - 19\"" },
+            { label: "Top Models", value: "Masseter X, Mogrip Meteor, Zapper Y" },
+            { label: "Traction Level", value: "Ultra Wet Grip / Offroad Blocks" },
+            { label: "Structure", value: "High-Tensile Wire Bead" }
           ],
           images: getTyreImages("mrf", "bike", ["/images/tyre_installation.png"]),
           sizes: [
-            { size: "17 Inch Variant 1", base: 2200, bulk: 2050 },
-            { size: "17 Inch Variant 2", base: 2400, bulk: 2250 },
-            { size: "17 Inch Variant 3", base: 2600, bulk: 2450 },
-            { size: "17 Inch Variant 4", base: 2800, bulk: 2650 },
-            { size: "17 Inch Variant 5", base: 2900, bulk: 2750 },
-            { size: "17 Inch Variant 6", base: 3000, bulk: 2850 },
-            { size: "R17 Sport Radial", base: 3100, bulk: 2950 },
-            { size: "R18 Sport Radial", base: 3400, bulk: 3250 },
-            { size: "R19 Sport Radial", base: 3800, bulk: 3600 }
+            { size: "2.75-17 Nylogrip Plus (17\")", base: 1850, bulk: 1750, imageIndex: 0 },
+            { size: "90/90-17 Zapper FS (17\")", base: 2100, bulk: 1980, imageIndex: 1 },
+            { size: "100/90-17 Mogrip Meteor (17\")", base: 2450, bulk: 2320, imageIndex: 2 },
+            { size: "120/80-17 Zapper Kurve (17\")", base: 2800, bulk: 2650, imageIndex: 3 },
+            { size: "110/70-17 Masseter FX (17\")", base: 3100, bulk: 2950, imageIndex: 4 },
+            { size: "140/70-17 Masseter X (17\")", base: 3750, bulk: 3550, imageIndex: 5 },
+            { size: "100/90-18 Zapper Y (18\")", base: 2600, bulk: 2470, imageIndex: 6 },
+            { size: "3.00-18 Mogrip Meteor M (18\")", base: 2300, bulk: 2180, imageIndex: 7 },
+            { size: "2.75-19 Nylogrip Ezeeride (19\")", base: 2200, bulk: 2090, imageIndex: 8 }
           ]
         }
       ]
@@ -494,50 +497,50 @@ export default function ProductsPage() {
         {
           type: "car",
           typeName: "Car Tyre",
-          modelName: "SecuraDrive radial",
-          badge: "Comfort Touring",
-          desc: "High directional stability radial designed to reduce rolling resistance and absorb micro-impacts from potholes.",
+          modelName: "SecuraDrive / Milaze X3 / Czar A/T",
+          badge: "Premium Touring & All-Terrain Series",
+          desc: "CEAT premium passenger car tyres. SecuraDrive radials for superior control and comfort, Milaze X3 with legendary 100,000 km durability, and Czar A/T for offroad adventure.",
           specs: [
-            { label: "Rim Diameter", value: "14\" - 17\"" },
-            { label: "Speed Rating", value: "H / V" },
-            { label: "Pitch Tuning", value: "Variable Noise Pitch" },
+            { label: "Rim Range", value: "12\" - 24\"" },
+            { label: "Top Models", value: "SecuraDrive, Milaze X3, Czar A/T" },
+            { label: "Technology", value: "Variable Noise Pitch Tuning" },
             { label: "Warranty", value: "5-Year Manufacturer" }
           ],
           images: getTyreImages("ceat", "car", ["/images/tyre_installation.png"]),
           sizes: [
-            { size: "R12 (12 Inch)", base: 3800, bulk: 3600 },
-            { size: "R14 Standard", base: 4300, bulk: 4050 },
-            { size: "R14 Premium", base: 4800, bulk: 4550 },
-            { size: "R16 Standard", base: 5900, bulk: 5600 },
-            { size: "R16 Premium", base: 7100, bulk: 6750 },
-            { size: "R17 (17 Inch)", base: 8500, bulk: 8100 },
-            { size: "R18 (18 Inch)", base: 10200, bulk: 9750 },
-            { size: "R20 (20 Inch)", base: 13000, bulk: 12400 },
-            { size: "R24 (24 Inch)", base: 17000, bulk: 16200 }
+            { size: "145/80 R12 Milaze X3 (12\")", base: 3200, bulk: 3040, imageIndex: 0 },
+            { size: "165/70 R14 SecuraDrive Standard (14\")", base: 4100, bulk: 3900, imageIndex: 1 },
+            { size: "175/65 R14 Milaze X3 Premium (14\")", base: 4400, bulk: 4180, imageIndex: 2 },
+            { size: "195/55 R16 SecuraDrive Standard (16\")", base: 5800, bulk: 5500, imageIndex: 3 },
+            { size: "205/65 R16 Czar A/T (16\")", base: 6700, bulk: 6350, imageIndex: 4 },
+            { size: "215/60 R17 SecuraDrive SUV (17\")", base: 8200, bulk: 7800, imageIndex: 5 },
+            { size: "225/55 R18 Czar Sport (18\")", base: 9900, bulk: 9400, imageIndex: 6 },
+            { size: "255/50 R20 Czar A/T Premium (20\")", base: 13500, bulk: 12800, imageIndex: 7 },
+            { size: "275/40 R24 Czar Sport Premium (24\")", base: 16800, bulk: 15900, imageIndex: 8 }
           ]
         },
         {
           type: "bike",
           typeName: "Bike Tyre",
-          modelName: "Zoom Rad X1",
-          badge: "Premium Radial Bike",
-          desc: "Specially formulated polymer compound providing high grip at high speed and excellent tracking on twisty mountain passes.",
+          modelName: "Zoom Rad X1 / Gripp X3 / Secura",
+          badge: "Premium Two-Wheeler Radial Series",
+          desc: "CEAT bike radials and street tyres. Zoom Rad X1 steel-belted radial tyres for exceptional high-speed stability and Gripp X3 block patterns for muddy and rural trails.",
           specs: [
-            { label: "Rim Diameter", value: "17\" Motorcycle" },
-            { label: "Lean Angle", value: "Sport Compound Construction" },
-            { label: "Safety", value: "Optimum Aqua Control" },
-            { label: "Durability", value: "Radial Steel-Belted Plies" }
+            { label: "Rim Range", value: "10\" - 18\"" },
+            { label: "Top Models", value: "Zoom Rad X1, Gripp X3, Milaze Scooter" },
+            { label: "Durability", value: "Radial Steel-Belted Plies" },
+            { label: "Safety", value: "Optimum Aqua Control Grooves" }
           ],
           images: getTyreImages("ceat", "bike", ["/images/tyre_installation.png"]),
           sizes: [
-            { size: "2.75-17 actiSTEER F1 (Front) (17\")", base: 1272, bulk: 1210 },
-            { size: "2.75-17 ACTIZIP F3 (Front) (17\")", base: 1280, bulk: 1220 },
-            { size: "3.00-17 ACTIGRIP R1 (17\")", base: 1497, bulk: 1420 },
-            { size: "100/90-17 actiGRIP R1 (Rear) (17\")", base: 1886, bulk: 1790 },
-            { size: "120/90-17 actiGRIP R6 (Rear) (17\")", base: 2610, bulk: 2480 },
-            { size: "3.00-18 actiGRIP R4 TT (Rear) (18\")", base: 1576, bulk: 1500 },
-            { size: "2.75-18 actiZIP R3 (Rear) (18\")", base: 1552, bulk: 1470 },
-            { size: "120/80-18 ACTIZIP R5 (Rear) (18\")", base: 2241, bulk: 2130 }
+            { size: "2.75-17 Secura Zoom F (Front) (17\")", base: 1250, bulk: 1190, imageIndex: 0 },
+            { size: "3.00-17 Zoom XL (17\")", base: 1450, bulk: 1380, imageIndex: 1 },
+            { size: "100/90-17 Gripp X3 (Rear) (17\")", base: 1850, bulk: 1760, imageIndex: 2 },
+            { size: "140/70-17 Zoom Rad X1 (Rear) (17\")", base: 2950, bulk: 2800, imageIndex: 3 },
+            { size: "90/100-10 Milaze Scooter (10\")", base: 1150, bulk: 1090, imageIndex: 4 },
+            { size: "3.00-18 Gripp F (Front/Rear) (18\")", base: 1600, bulk: 1520, imageIndex: 5 },
+            { size: "2.75-18 Secura Zoom F (Rear) (18\")", base: 1500, bulk: 1420, imageIndex: 0 },
+            { size: "120/80-18 Zoom XL (Rear) (18\")", base: 2150, bulk: 2040, imageIndex: 1 }
           ]
         }
       ]
@@ -1089,7 +1092,9 @@ export default function ProductsPage() {
                   key={item.id}
                   onClick={() => {
                     setSelectedProduct(item);
-                    setCarouselIndex(0);
+                    const primaryVariant = isTyre ? item.variants[0] : item;
+                    const firstSize = primaryVariant?.sizes?.[0];
+                    setCarouselIndex(firstSize?.imageIndex !== undefined ? firstSize.imageIndex : 0);
                     setActiveVariantIndex(0);
                     setSelectedSizeIndex(0);
                   }}
@@ -1263,7 +1268,8 @@ export default function ProductsPage() {
                               key={v.type}
                               onClick={() => {
                                 setActiveVariantIndex(vIdx);
-                                setCarouselIndex(0);
+                                const firstSize = v.sizes?.[0];
+                                setCarouselIndex(firstSize?.imageIndex !== undefined ? firstSize.imageIndex : 0);
                                 setSelectedSizeIndex(0);
                               }}
                               className={`flex-1 py-1.5 rounded-md font-orbitron text-[10px] font-bold uppercase tracking-wider transition-all duration-300 ${
@@ -1272,7 +1278,7 @@ export default function ProductsPage() {
                                   : 'text-gray-400 hover:text-white'
                               }`}
                             >
-                              {v.type === 'car' ? '🚗 Car' : v.type === 'bike' ? '🏍️ Bike' : '🚜 Tractor'}
+                              {v.type === 'car' ? `🚗 ${v.typeName}` : v.type === 'bike' ? `🏍️ ${v.typeName}` : `🚜 ${v.typeName}`}
                             </button>
                           ))}
                         </div>
@@ -1290,7 +1296,7 @@ export default function ProductsPage() {
                                 key={s.size}
                                 onClick={() => {
                                   setSelectedSizeIndex(sIdx);
-                                  setCarouselIndex(sIdx);
+                                  setCarouselIndex(s.imageIndex !== undefined ? s.imageIndex : sIdx);
                                 }}
                                 className={`px-2.5 py-1.5 rounded border text-[10px] font-mono font-bold transition-all ${
                                   selectedSizeIndex === sIdx
